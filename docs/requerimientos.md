@@ -29,6 +29,7 @@ La aplicación tiene como objetivo convertirse en el punto de encuentro digital 
 1.4. **Gestión de perfil**:
 
 -   Posibilidad de editar información personal (nombre, correo, foto de perfil).
+-   Crear un avatar personalizado que diferencie a los usuarios.
 -   Cambio de contraseña mediante verificación.
 
 #### **2. Experiencia Interactiva**
@@ -51,18 +52,29 @@ La aplicación tiene como objetivo convertirse en el punto de encuentro digital 
 **2.1.3. Juegos y Rituales de Año Nuevo**:
 
 -   Juegos interactivos como el ritual de las doce uvas, quema del Año Viejo, y "agüeros" (ropa amarilla, maletas, etc.).
--   Simulador para la entrega de regalos navideños.
+-   Scoreboard de los resultados de los juegos.
+
+**2.1.3.1. Prender velas**:
+
+-   El usuario podra prender hasta 12 velas, cada una simbolizando cada mesa del año
+-   De manera aleatoria, alguna de las velas podra apagarse.
+-   Todas las velas deben de mantenerse encendidas, el jugador que por mayor tiempo pase con todas las velas encendidas gana.
+
+**2.1.3.2. Agueros:** 
+
+-   Los usuarios podran cargar a sus avatares de "agueros".
+-   Estos agueros quedaran registrados en el perfil de cada usuario.
 
 **2.1.4. Parrandas Virtuales**:
 
 -   Espacio para reproducir listas de canciones típicas de diciembre en Colombia.
 -   Inclusión de efectos visuales festivos.
 
-**2.1.5. Recetas Tradicionales Colombianas**:
+**2.2.Foro de Recetas Tradicionales Colombianas**:
 
--   Plataforma para compartir recetas navideñas.
--   Posibilidad de visualizar, comentar y calificar recetas de la comunidad.
--   Espacio para subir fotos de las preparaciones.
+-   Plataforma para visualizar recetas navideñas, en un formato tipo foro.
+-   Posibilidad de comentar y calificar recetas propuestas en la aplicacion.
+-   Espacio para subir fotos de las preparaciones de los usuarios e interactuar entre ellospor medio de comentarios.
 
 ----------
 
@@ -73,7 +85,7 @@ La aplicación tiene como objetivo convertirse en el punto de encuentro digital 
 2.  **Interactividad**:
     -   Animaciones suaves para actividades visuales (e.g., prender velas, quema del Año Viejo).
 3.  **Personalización**:
-    -   Perfiles de usuario para guardar recetas y fotos.
+    -   Perfiles de usuario para marcar recetas como favoritos y fotos.
 4.  **Rendimiento**:
     -   Optimización para la carga rápida de contenido multimedia.
 5.  **Seguridad**:
@@ -140,6 +152,7 @@ La aplicación tiene como objetivo convertirse en el punto de encuentro digital 
     -   `nombre`
     -   `artista`
     -   `url_audio`
+    -   `genero`
 
 #### **Relaciones**
 
