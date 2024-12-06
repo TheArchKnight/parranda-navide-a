@@ -1,4 +1,4 @@
-# PARRANDA NAVIDEÑA
+## PARRANDA NAVIDEÑA
 
 #### **Producto**
 
@@ -74,7 +74,7 @@ La aplicación tiene como objetivo convertirse en el punto de encuentro digital 
 
 -   Plataforma para visualizar recetas navideñas, en un formato tipo foro.
 -   Posibilidad de comentar y calificar recetas propuestas en la aplicacion.
--   Espacio para subir fotos de las preparaciones de los usuarios e interactuar entre ellospor medio de comentarios.
+-   Espacio para subir fotos de las preparaciones de los usuarios e interactuar entre ellos por medio de comentarios.
 
 ----------
 
@@ -103,57 +103,67 @@ La aplicación tiene como objetivo convertirse en el punto de encuentro digital 
     -   `nombre`
     -   `correo`
     -   `contraseña`
-    -   Relación 1:N con **Receta** y **Foto_Receta**.
-2.  **Novena**
-    
-    -   `id_novena` (PK)
-    -   `título`
-    -   `contenido` (Texto de la oración o villancico)
-    -   `fecha_creación`
-    -   Relación N:M con **Canción**.
+    -   `url_foto_perfil`
+    -   `color_avatar`
+    -   `tiempo_velas` ¿Cuanto tiempo acumulado llevan todas las velas encendidas?
+2. **Aguero**
+    -   `id_aguero` (PK)
+    -   `descripcion`
+    -   `grafica`
+    -   Relaacion N:M con Usuario
 3.  **Receta**
     
     -   `id_receta` (PK)
     -   `nombre`
     -   `ingredientes` (Lista)
     -   `instrucciones` (Texto largo)
-    -   `id_autor` (FK -> Usuario)
     -   Relación 1:N con **Foto_Receta**.
     -   Relación 1:N con **Calificación_Receta**.
-4.  **Foto_Receta**
+4.  **Foto**
     
     -   `id_foto` (PK)
-    -   `id_receta` (FK)
-    -   `id_usuario` (FK)
+    -   `id_receta` (FK->Receta)
+    -   `id_comentario` (FK->Comentario)
     -   `url_imagen`
     -   `fecha_subida`
-5.  **Calificación_Receta**
-    
+    Nota: Una foto solo se puede relacionar con una receta o un comentario
+
+5. **Comentario**
+    -   `id` (PK)
+    -   `comentario`
+    -   `id_usuario ` (FK -> Usuario)
+    -   `id_receta` (FK -> Receta)
+    -   `respuesta_de` (FK -> Comentario) ¿Es respuesta de otro comentario?
+
+6.  **Calificación_Receta**    
     -   `id_calificación` (PK)
     -   `valor` (Puntaje)
     -   `id_calificador` (FK -> Usuario)
-    -   `id_receta` (FK)
-6.  **Ritual**
-    
-    -   `id_ritual` (PK)
-    -   `nombre`
-    -   `descripción`
-    -   `animación_url`
-7.  **Actividad**
-    
+    -   `id_receta` (FK -> Receta)
+  
+7.  **Actividad** 
     -   `id_actividad` (PK)
     -   `nombre`
     -   `descripción`
     -   `tipo` (Novena, Ritual, Parranda)
     -   `animación_url`
-8.  **Canción**
-    
+8.  **Canción** 
     -   `id_canción` (PK)
     -   `nombre`
     -   `artista`
     -   `url_audio`
     -   `genero`
-
+9. **Lista_Canciones**
+    -   `id_lista` (PK)
+    -   `nombre`
+    -   `fecha_creacion`
+    -   `tematica`
+    -   Relacion N:M con **Cancion**
+    -   Relacion N:M con Actividad
+10. **Villancico**
+    -   `id_villancico` (PK)
+    -   `letra` Texto del villancico
+    -   `id_cancion` (FK->Cancion) El villancico puede tener una cancion asociada
 #### **Relaciones**
 
 -   **Usuario - Receta**: Un usuario puede publicar varias recetas.
