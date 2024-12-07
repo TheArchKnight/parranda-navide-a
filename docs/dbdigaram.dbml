@@ -4,13 +4,11 @@ Table Usuario {
   correo varchar
   contraseña varchar [note: "Hash de la contraseña"]
   url_foto_perfil varchar [note: "Enlace a la foto de perfil del usuario"]
-  tiempo_velas int [note: "Tiempo en que todas las velas pasan encendidas en minutos"]
 }
 
 Table Aguero{
   id_aguero int [pk, increment]
   descripcion text
-  grafica varchar [note: "Enlace a la representacion grafica del aguero"]
 }
 
 Table Receta{

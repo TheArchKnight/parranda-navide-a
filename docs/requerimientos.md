@@ -29,7 +29,6 @@ La aplicación tiene como objetivo convertirse en el punto de encuentro digital 
 1.4. **Gestión de perfil**:
 
 -   Posibilidad de editar información personal (nombre, correo, foto de perfil).
--   Crear un avatar personalizado que diferencie a los usuarios.
 -   Cambio de contraseña mediante verificación.
 
 #### **2. Experiencia Interactiva**
@@ -51,28 +50,28 @@ La aplicación tiene como objetivo convertirse en el punto de encuentro digital 
 
 **2.1.3. Juegos y Rituales de Año Nuevo**:
 
--   Juegos interactivos como el ritual de las doce uvas, quema del Año Viejo, y "agüeros" (ropa amarilla, maletas, etc.).
--   Scoreboard de los resultados de los juegos.
+-   Juegos interactivos como el ritual de las doce uvas, quema del Año Viejo, y "agüeros" (ropa amarilla, maletas, etc.). Nota: ¿Que juegos son? ¿Como vamos a abordar esos juegos?
 
 **2.1.3.1. Prender velas**:
 
--   El usuario podra prender hasta 12 velas, cada una simbolizando cada mesa del año
--   De manera aleatoria, alguna de las velas podra apagarse.
--   Todas las velas deben de mantenerse encendidas, el jugador que por mayor tiempo pase con todas las velas encendidas gana.
+-   El usuario podra prender hasta 12 velas, cada una simbolizando cada mes del año
 
 **2.1.3.2. Agueros:** 
 
--   Los usuarios podran cargar a sus avatares de "agueros".
+-   Los usuarios pueden seleccionar multiples agueros como etiquetas en su perfil
 -   Estos agueros quedaran registrados en el perfil de cada usuario.
 
 **2.1.4. Parrandas Virtuales**:
 
 -   Espacio para reproducir listas de canciones típicas de diciembre en Colombia.
+-   El usuario podra seleccionar 2 tipos de reproduccion de la musica: lista continua y modo radio:
+  - La reproduccion de modo radio seleccionara musica de manera aleatoria de diferentes listas, permitiendo a los usuarios disfrutar de variedad.
 -   Inclusión de efectos visuales festivos.
 
 **2.2.Foro de Recetas Tradicionales Colombianas**:
 
 -   Plataforma para visualizar recetas navideñas, en un formato tipo foro.
+-   Estas recetas son publicadas en "posts". Cada post tiene instrucciones paso a paso asi como imagenes del plato ya preparado.
 -   Posibilidad de comentar y calificar recetas propuestas en la aplicacion.
 -   Espacio para subir fotos de las preparaciones de los usuarios e interactuar entre ellos por medio de comentarios.
 
@@ -104,12 +103,10 @@ La aplicación tiene como objetivo convertirse en el punto de encuentro digital 
     -   `correo`
     -   `contraseña`
     -   `url_foto_perfil`
-    -   `color_avatar`
-    -   `tiempo_velas` ¿Cuanto tiempo acumulado llevan todas las velas encendidas?
+
 2. **Aguero**
     -   `id_aguero` (PK)
     -   `descripcion`
-    -   `grafica`
     -   Relaacion N:M con Usuario
 3.  **Receta**
     
@@ -117,7 +114,7 @@ La aplicación tiene como objetivo convertirse en el punto de encuentro digital 
     -   `nombre`
     -   `ingredientes` (Lista)
     -   `instrucciones` (Texto largo)
-    -   Relación 1:N con **Foto_Receta**.
+    -   Relación 1:N con **Foto**.
     -   Relación 1:N con **Calificación_Receta**.
 4.  **Foto**
     
