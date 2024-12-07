@@ -1,0 +1,77 @@
+Table Usuario {
+  id_usuario int [pk, increment]
+  nombre varchar
+  correo varchar
+  contraseña varchar [note: "Hash de la contraseña"]
+  url_foto_perfil varchar [note: "Enlace a la foto de perfil del usuario"]
+}
+
+Table Aguero{
+  id_aguero int [pk, increment]
+  descripcion text
+}
+
+Table Receta{
+  id_receta int [pk, increment]
+  nombre varchar
+  ingredientes text [note: "Lista de ingredientes con sus cantidades"]
+  instrucciones text 
+}
+
+Table Foto{
+  id_foto int [pk, increment]
+  id_receta int [ref: > Receta.id_receta]
+  id_comentario int [ref: > Comentario.id_comentario]
+  url_imagen varchar
+  fecha_subida datetime
+
+  Note: "Una foto solo puede estar relacionada a una receta o a un comentario"
+}
+
+Table Comentario{
+  id_comentario int [pk, increment]
+  contenido text
+  id_usuario int [ref: > Usuario.id_usuario]
+  id_receta int [ref: > Receta.id_receta]
+  respuesta_de int [ref: - Comentario.id_comentario, note: "¿Es respuesta a otro comentario?"]
+}
+
+Table Calificacion_Receta{
+  id_calificacion int [pk, increment]
+  valor int [note: "Puntaje que se le da la receta"]
+  id_calificador int [ref: > Usuario.id_usuario]
+  id_rectea int [ref: > Receta.id_receta]
+}
+
+Table Actividad{
+  id_ritual int [pk, increment]
+  nombre varchar
+  descripcion text
+  tipo varchar [note: "Novena, Ritual o Parranda"]
+  animacion_url varchar
+}
+
+Table Cancion{
+  id_cancion int [pk, increment]
+  nombre varchar
+  artista varchar
+  url_audio varchar
+  genero varchar
+}
+
+Table Lista_Canciones{
+  id_lista int [pk, increment]
+  nombre varchar
+  fecha_creacion datetime
+  tematica varchar
+}
+
+Table Villancico{
+  id_villancico int [pk, increment]
+  letra text
+  id_cancion int [ref: - Cancion.id_cancion]
+}
+
+Ref: Aguero.id_aguero <> Usuario.id_usuario
+Ref: Lista_Canciones.id_lista <> Cancion.id_cancion
+Ref: Actividad.id_ritual <> Lista_Canciones.id_lista

@@ -1,4 +1,4 @@
-# PARRANDA NAVIDEÑA
+## PARRANDA NAVIDEÑA
 
 #### **Producto**
 
@@ -29,7 +29,6 @@ La aplicación tiene como objetivo convertirse en el punto de encuentro digital 
 1.4. **Gestión de perfil**:
 
 -   Posibilidad de editar información personal (nombre, correo, foto de perfil).
--   Crear un avatar personalizado que diferencie a los usuarios.
 -   Cambio de contraseña mediante verificación.
 
 #### **2. Experiencia Interactiva**
@@ -51,30 +50,30 @@ La aplicación tiene como objetivo convertirse en el punto de encuentro digital 
 
 **2.1.3. Juegos y Rituales de Año Nuevo**:
 
--   Juegos interactivos como el ritual de las doce uvas, quema del Año Viejo, y "agüeros" (ropa amarilla, maletas, etc.).
--   Scoreboard de los resultados de los juegos.
+-   Juegos interactivos como el ritual de las doce uvas, quema del Año Viejo, y "agüeros" (ropa amarilla, maletas, etc.). Nota: ¿Que juegos son? ¿Como vamos a abordar esos juegos?
 
 **2.1.3.1. Prender velas**:
 
--   El usuario podra prender hasta 12 velas, cada una simbolizando cada mesa del año
--   De manera aleatoria, alguna de las velas podra apagarse.
--   Todas las velas deben de mantenerse encendidas, el jugador que por mayor tiempo pase con todas las velas encendidas gana.
+-   El usuario podra prender hasta 12 velas, cada una simbolizando cada mes del año
 
 **2.1.3.2. Agueros:** 
 
--   Los usuarios podran cargar a sus avatares de "agueros".
+-   Los usuarios pueden seleccionar multiples agueros como etiquetas en su perfil
 -   Estos agueros quedaran registrados en el perfil de cada usuario.
 
 **2.1.4. Parrandas Virtuales**:
 
 -   Espacio para reproducir listas de canciones típicas de diciembre en Colombia.
+-   El usuario podra seleccionar 2 tipos de reproduccion de la musica: lista continua y modo radio:
+  - La reproduccion de modo radio seleccionara musica de manera aleatoria de diferentes listas, permitiendo a los usuarios disfrutar de variedad.
 -   Inclusión de efectos visuales festivos.
 
 **2.2.Foro de Recetas Tradicionales Colombianas**:
 
 -   Plataforma para visualizar recetas navideñas, en un formato tipo foro.
+-   Estas recetas son publicadas en "posts". Cada post tiene instrucciones paso a paso asi como imagenes del plato ya preparado.
 -   Posibilidad de comentar y calificar recetas propuestas en la aplicacion.
--   Espacio para subir fotos de las preparaciones de los usuarios e interactuar entre ellospor medio de comentarios.
+-   Espacio para subir fotos de las preparaciones de los usuarios e interactuar entre ellos por medio de comentarios.
 
 ----------
 
@@ -103,57 +102,65 @@ La aplicación tiene como objetivo convertirse en el punto de encuentro digital 
     -   `nombre`
     -   `correo`
     -   `contraseña`
-    -   Relación 1:N con **Receta** y **Foto_Receta**.
-2.  **Novena**
-    
-    -   `id_novena` (PK)
-    -   `título`
-    -   `contenido` (Texto de la oración o villancico)
-    -   `fecha_creación`
-    -   Relación N:M con **Canción**.
+    -   `url_foto_perfil`
+
+2. **Aguero**
+    -   `id_aguero` (PK)
+    -   `descripcion`
+    -   Relaacion N:M con Usuario
 3.  **Receta**
     
     -   `id_receta` (PK)
     -   `nombre`
     -   `ingredientes` (Lista)
     -   `instrucciones` (Texto largo)
-    -   `id_autor` (FK -> Usuario)
-    -   Relación 1:N con **Foto_Receta**.
+    -   Relación 1:N con **Foto**.
     -   Relación 1:N con **Calificación_Receta**.
-4.  **Foto_Receta**
+4.  **Foto**
     
     -   `id_foto` (PK)
-    -   `id_receta` (FK)
-    -   `id_usuario` (FK)
+    -   `id_receta` (FK->Receta)
+    -   `id_comentario` (FK->Comentario)
     -   `url_imagen`
     -   `fecha_subida`
-5.  **Calificación_Receta**
-    
+    Nota: Una foto solo se puede relacionar con una receta o un comentario
+
+5. **Comentario**
+    -   `id` (PK)
+    -   `comentario`
+    -   `id_usuario ` (FK -> Usuario)
+    -   `id_receta` (FK -> Receta)
+    -   `respuesta_de` (FK -> Comentario) ¿Es respuesta de otro comentario?
+
+6.  **Calificación_Receta**    
     -   `id_calificación` (PK)
     -   `valor` (Puntaje)
     -   `id_calificador` (FK -> Usuario)
-    -   `id_receta` (FK)
-6.  **Ritual**
-    
-    -   `id_ritual` (PK)
-    -   `nombre`
-    -   `descripción`
-    -   `animación_url`
-7.  **Actividad**
-    
+    -   `id_receta` (FK -> Receta)
+  
+7.  **Actividad** 
     -   `id_actividad` (PK)
     -   `nombre`
     -   `descripción`
     -   `tipo` (Novena, Ritual, Parranda)
     -   `animación_url`
-8.  **Canción**
-    
+8.  **Canción** 
     -   `id_canción` (PK)
     -   `nombre`
     -   `artista`
     -   `url_audio`
     -   `genero`
-
+9. **Lista_Canciones**
+    -   `id_lista` (PK)
+    -   `nombre`
+    -   `fecha_creacion`
+    -   `tematica`
+    -   Relacion N:M con **Cancion**
+    -   Relacion N:M con Actividad
+10. **Villancico**
+    -   `id_villancico` (PK)
+    -   `letra` Texto del villancico
+    -   `id_cancion` (FK->Cancion) El villancico puede tener una cancion asociada
 #### **Relaciones**
 
 -   **Usuario - Receta**: Un usuario puede publicar varias recetas.
