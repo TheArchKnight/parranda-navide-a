@@ -1,98 +1,64 @@
 # 1. Autenticación y Gestión de Usuarios
 
     1. Registro de usuario:
-        Como usuario, quiero registrarme proporcionando mi nombre, correo electrónico y contraseña para acceder a las funcionalidades de la aplicación.
+        Como usuario, puedo registrarme proporcionando mi nombre, correo electrónico y contraseña para acceder a las funcionalidades de la aplicación.
 
     2. Inicio de sesión:
-        Como usuario, quiero iniciar sesión con mi correo electrónico y contraseña para acceder a mi perfil y personalizar mi experiencia.
+        Como usuario, puedo iniciar sesión con mi correo electrónico y contraseña para acceder a mi perfil y personalizar mi experiencia.
 
     3. Recuperación de contraseña:
-        Como usuario, quiero recuperar mi contraseña a través de un enlace enviado a mi correo electrónico para restablecer el acceso a mi cuenta.
+        Como usuario, puedo recuperar mi contraseña a través de un enlace enviado a mi correo electrónico para restablecer el acceso a mi cuenta.
 
     4. Gestión de perfil:
-        Como usuario, quiero editar mi información personal (nombre, correo, foto de perfil) para mantener mi cuenta actualizada.
-        Como usuario, quiero cambiar mi contraseña con un proceso de verificación para garantizar la seguridad de mi cuenta.
+        Como usuario, puedo editar mi información personal (nombre, correo, foto de perfil) para mantener mi cuenta actualizada.
+        Como usuario, puedo cambiar mi contraseña con un proceso de verificación para garantizar la seguridad de mi cuenta.
 
 # 2. Experiencia Interactiva
 
 ## 2.1. Eventos principales
 
-    5. Vista de actividades destacadas:
-        Como usuario, quiero ver una lista de actividades principales de la temporada para elegir cuál participar.
+    5. Vista  y selección de actividades:
+        Como usuario, puedo ver una lista  y seleccionar actividades (Novenas Virtuales, Rituales Navideños, Radio Navideña, Recetas Colombianas)  de la temporada para elegir en cuál participar.
 
-    6. Selección de actividad:
-        Como usuario, quiero seleccionar entre diversas actividades (novenas, juegos, recetas) para interactuar según mis preferencias.
+# 3. Actividades
 
-## 2.2. Salón de Parrandas
+## 3.1. Novenas Virtuales
 
-    7. Reproducción de música:
-        Como usuario, quiero acceder a una biblioteca musical con canciones típicas de diciembre y villancicos para disfrutar de la música navideña.
+    6. Animaciones inmersivas:
+        Como usuario, puedo participar en novenas con animaciones interactivas para recrear la experiencia tradicional.
 
-    8. Reproducción de "Águila Roja":
-        Como usuario, quiero asegurarme de que la canción "Águila Roja" esté disponible para reproducirla durante la parranda.
+    7. Lectura de oraciones:
+        Como usuario, puedo leer las oraciones de las novenas directamente desde la aplicación para seguir las tradiciones.
 
-## 2.3. Novenas Virtuales
+    8. Villancicos automáticos:
+        Como usuario, puedo reproducir villancicos automáticamente mientras sigo las oraciones de la novena.
 
-    9. Animaciones inmersivas:
-        Como usuario, quiero participar en novenas con animaciones interactivas para recrear la experiencia tradicional.
+## 3.2. Rituales Navideños 
 
-    10. Lectura de oraciones:
-        Como usuario, quiero leer las oraciones de las novenas directamente desde la aplicación para seguir las tradiciones.
+    9. Ritual de las doce uvas:
+        Como usuario, puedo visualizar el ritual explicativo de las doce uvas para comprender las tradiciones de Año Nuevo.
 
-    11. Villancicos automáticos:
-        Como usuario, quiero que la aplicación reproduzca villancicos automáticamente mientras sigo las oraciones de la novena.
+    10. Ritual Quema del Año Viejo:
+        Como usuario, puedo visualizar la quema el Año Viejo virtualmente con animaciones para recrear la tradición.
 
-## 2.4. Juegos y Rituales
+    11. Ritual Prender velas:
+        Como usuario, puedo visualizar el ritual de prender velas para simbolizar la tradición navideña.
 
-    12. Jugar el ritual de las doce uvas:
-        Como usuario, quiero participar en el ritual interactivo de las doce uvas para seguir las tradiciones de Año Nuevo.
+## 3.3. Radio Navideña
 
-    13. Jugar "quema del Año Viejo":
-        Como usuario, quiero jugar a quemar el Año Viejo virtualmente con animaciones para recrear la tradición.
+    12. Canciones típicas de navidad:
+        Como usuario, puedo acceder a canciones típicas decembrinas para disfrutar de la música tgradicoinal.
 
-    14.Prender velas:
-        Como usuario, quiero prender virtualmente hasta 12 velas para representar cada mes del año que pasa.
+## 3.4. Recetas Colombianas
 
-    15. Agregar agüeros:
-        Como usuario, quiero cargar agüeros a mi avatar para personalizar mi experiencia y mostrar mis tradiciones.
+    13. Visualizar recetas:
+        Como usuario, puedo acceder a una sección de recetas tradicionales navideñas en un formato visual fácil de entender.
 
-    16. Visualizar mis agüeros:
-        Como usuario, quiero ver un historial de los agüeros que he registrado en mi perfil.
+    14. Comentar recetas:
+        Como usuario, puedo crear, eliminar y modificar mis comentarios en las recetas para compartir mis opiniones o tips con otros usuarios. 
 
-## 2.5. Parrandas Virtuales
+    15. Subir fotos de preparaciones:
+        Como usuario, puedo subir fotos y eliminarlas de mis preparaciones para mostrar mis resultados en la comunidad.
 
-    17. Lista de canciones típicas:
-        Como usuario, quiero acceder a listas de canciones típicas decembrinas para disfrutar de una parranda virtual.
-
-## 2.6. Foro de Recetas
-
-    18. Visualizar recetas(filtro):
-        Como usuario, quiero acceder a una sección de recetas tradicionales navideñas en un formato visual fácil de entender.
-
-    19. Comentar recetas(crud):
-        Como usuario, quiero comentar en las recetas que veo para compartir mis opiniones o tips con otros usuarios.
-
-    20. Subir fotos de preparaciones:
-        Como usuario, quiero subir fotos de mis preparaciones para mostrar mis resultados en la comunidad.
-
-    21. Calificar recetas:
-        Como usuario, quiero calificar recetas para dar mi opinión sobre cuáles son las mejores.
-
-    22. Favoritos(crud):
-        Como usuario, quiero marcar recetas como favoritas para poder encontrarlas fácilmente en el futuro.
-
-
-`Nota: Los siguienres requerimientos, ¿Califican como historias de usuario'`
-# 3. Otros Requerimientos No Funcionales
-
-    23. Acceso desde cualquier dispositivo:
-        Como usuario, quiero acceder a la aplicación desde mi móvil, tablet o desktop para disfrutar de las actividades sin limitaciones.
-
-    24. Animaciones suaves:
-        Como usuario, quiero que las animaciones (e.g., prender velas, quemar el Año Viejo) sean fluidas para una experiencia agradable.
-
-    25. Carga rápida:
-        Como usuario, quiero que la aplicación cargue rápidamente, incluso al usarla con conexiones de internet lentas.
-
-    26. Protección de datos:
-        Como usuario, quiero que mis datos personales estén protegidos mediante prácticas seguras de desarrollo.
+    16. Calificar recetas:
+        Como usuario, puedo calificar las recetas tradicionales navideñas.
