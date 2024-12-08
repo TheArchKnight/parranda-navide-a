@@ -54,15 +54,15 @@ La aplicación tiene como objetivo convertirse en el punto de encuentro digital 
 **3.3. Radio Navideña**:
 
 -   Espacio para reproducir listas de canciones típicas de diciembre en Colombia.
--   El usuario podra seleccionar 2 tipos de reproduccion de la musica: lista continua y modo radio:
-  - La reproduccion de modo radio seleccionara musica de manera aleatoria de diferentes listas, permitiendo a los usuarios disfrutar de variedad.
+-   El usuario podrá seleccionar 2 tipos de reproduccion de la música: lista continua y modo radio:
+  - La reproduccion de modo radio seleccionará  musica de manera aleatoria de diferentes listas, permitiendo a los usuarios disfrutar de variedad.
 -   Inclusión de efectos visuales festivos.
 
 **3.4. Recetas Colombianas**:
 
 -   Plataforma para visualizar recetas navideñas.
--   Estas recetas son publicadas en "posts". Cada post tiene instrucciones paso a paso asi como imagenes del plato ya preparado.
--   Posibilidad de comentar y calificar recetas propuestas en la aplicacion.
+-   Estas recetas son publicadas en "posts". Cada post tiene instrucciones paso a paso así como imagenes del plato ya preparado.
+-   Posibilidad de comentar y calificar recetas propuestas en la aplicación.
 -   Espacio para subir fotos de las preparaciones de los usuarios e interactuar entre ellos por medio de comentarios.
 
 ----------
