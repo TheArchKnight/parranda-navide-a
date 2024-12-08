@@ -1,4 +1,4 @@
-| **NOMBRE**                       | Radio Navideña                                                              |
+| **NOMBRE**                       | CU12 - Radio Navideña                                                              |
 |----------------------------------|-----------------------------------------------------------------------------|
 | **USUARIO**                      | Usuario                                                                     |
 | **DESCRIPCIÓN**                  | Permite a los usuarios escuchar música típica de diciembre a través de playlists que pueden pausar, reproducir o cambiar de canción. También está el modo "radio" que permite colocar las canciones en aleatorio. |
@@ -18,7 +18,7 @@
 | **NOTAS ADICIONALES**            | El reproductor va a tener una forma de radio simbolizando la tradición colombiana. |
 
 
-| **NOMBRE**                       | Visualizar Recetas                                                        |
+| **NOMBRE**                       | CU13 -Visualizar Recetas                                                        |
 |----------------------------------|---------------------------------------------------------------------------|
 | **USUARIO**                      | Usuario                                                                   |
 | **DESCRIPCIÓN**                  | Permite a los usuarios acceder a una sección con recetas tradicionales navideñas donde se explican los ingredientes necesarios, el paso a paso de cómo se preparan e imágenes del platillo. |
@@ -38,7 +38,7 @@
 | **NOTAS ADICIONALES**            | Incluir imágenes de las recetas para mayor atractivo visual.              |
 
 
-| **NOMBRE**                       | Comentar Recetas                                                        |
+| **NOMBRE**                       | CU14 -Comentar Recetas                                                        |
 |----------------------------------|-------------------------------------------------------------------------|
 | **USUARIO**                      | Usuario                                                                  |
 | **DESCRIPCIÓN**                  | Permite a los usuarios crear, eliminar y modificar comentarios en las recetas para compartir opiniones o tips con otros usuarios. |
@@ -58,7 +58,7 @@
 | **NOTAS ADICIONALES**            |                                                                         |
 
 
-| **NOMBRE**                       | Subir Fotos de Preparaciones                                            |
+| **NOMBRE**                       | CU15 - Subir Fotos de Preparaciones                                            |
 |----------------------------------|-------------------------------------------------------------------------|
 | **USUARIO**                      | Usuario                                                                  |
 | **DESCRIPCIÓN**                  | Permite a los usuarios subir fotos de sus preparaciones de recetas en los comentarios para compartir sus resultados con la comunidad. |
@@ -77,7 +77,7 @@
 | **NOTAS ADICIONALES**            |                                                                         |
 
 
-| **NOMBRE**                       | Calificar Recetas                                                      |
+| **NOMBRE**                       | CU16 -Calificar Recetas                                                      |
 |----------------------------------|-------------------------------------------------------------------------|
 | **USUARIO**                      | Usuario                                                                  |
 | **DESCRIPCIÓN**                  | Permite a los usuarios calificar las recetas tradicionales navideñas con una calificación entre 1 y 5 estrellas para compartir su opinión sobre la calidad de la receta. |
