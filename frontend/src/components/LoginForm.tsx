@@ -12,12 +12,12 @@ type LoginFormProps = {
   loading: boolean;
 };
 
-export default function LoginForm({
+const  LoginForm = ({
   formData,
   onChange,
   onSubmit,
   loading,
-}: LoginFormProps) {
+}: LoginFormProps)  => {
   const [showPassword, setShowPassword] = React.useState(false);
   return (
     <div className="inset-0 w-full p-8">
@@ -53,3 +53,5 @@ export default function LoginForm({
     </div>
   );
 }
+
+export default LoginForm;

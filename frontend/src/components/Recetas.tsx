@@ -1,6 +1,5 @@
-import React from 'react';
 
-const Recetas: React.FC = () => {
+const Recetas = () => {
     return (
         <h1>Recetas</h1>
     );
