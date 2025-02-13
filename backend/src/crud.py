@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
-from models import Usuario
-from schemas import UsuarioCreate
-from auth import hash_password
+from src.models import Usuario
+from src.schemas import UsuarioCreate
+from src.auth import hash_password
 
 
 def get_usuario_by_correo(db: Session, correo: str):

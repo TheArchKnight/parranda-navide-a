@@ -1,8 +1,7 @@
 
 from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
-from src import models, crud, schemas, database
-import auth
+from src import models, crud, schemas, database, auth
 from datetime import timedelta
 
 app = FastAPI()
