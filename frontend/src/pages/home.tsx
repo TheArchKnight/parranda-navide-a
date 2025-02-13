@@ -1,15 +1,31 @@
 import React from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { Button } from '../components/formComponents/Button';
+import Novenas from '../components/Novenas';
+import Navbar from '../components/Navbar';
+import Recetas from '../components/Recetas';
 
 const Home: React.FC = () => {
     const { user, logout } = useAuth();
+    const navItems = [
+        {
+            name: 'Novenas',
+            component: <Novenas />,
+        },
+        {
+            name: 'Recetas',
+            component: <Recetas />,
+        },
+
+    ];
+
     return (
-        <div>
-            <h1>Bienvenido a la Parranda Navideña</h1>
-            <p>{user?.email}</p>
-            <Button onClick={logout}>Cerrar sesión</Button>
-        </div>
+        <>
+        <Navbar 
+            nickname={user?.name || ''} 
+            navItems={navItems} 
+            onLogout={logout}
+        />
+        </>
     );
 };
 

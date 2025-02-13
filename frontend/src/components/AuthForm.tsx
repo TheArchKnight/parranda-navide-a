@@ -4,7 +4,7 @@ import { Button } from "./formComponents/Button";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
 
-export default function AuthForm() {
+const  AuthForm = () => {
   const { isLogin, setIsLogin, loading, formData, handleChange, handleSubmit } =
     useAuthForm();
 
@@ -56,3 +56,6 @@ export default function AuthForm() {
     </div>
   );
 }
+
+
+export default AuthForm;

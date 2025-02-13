@@ -13,12 +13,12 @@ type RegisterFormProps = {
   loading: boolean;
 };
 
-export default function RegisterForm({
+const RegisterForm = ({
   formData,
   onChange,
   onSubmit,
   loading,
-}: RegisterFormProps) {
+}: RegisterFormProps) => {
   const [showPassword, setShowPassword] = React.useState(false);
   return (
     <div className="inset-0 w-full p-8">
@@ -57,3 +57,6 @@ export default function RegisterForm({
     </div>
   );
 }
+
+
+export default RegisterForm;
