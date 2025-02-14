@@ -7,6 +7,11 @@ class UsuarioBase(BaseModel):
     url_foto_perfil: str | None = None
 
 
+class LoginRequest(BaseModel):
+    correo: EmailStr
+    contraseña: str
+
+
 class UsuarioCreate(UsuarioBase):
     contraseña: str
 
