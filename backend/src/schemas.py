@@ -1,23 +1,28 @@
 from pydantic import BaseModel, EmailStr
 
 
-class UsuarioBase(BaseModel):
-    nombre: str
-    correo: EmailStr
-    url_foto_perfil: str | None = None
+class UserBase(BaseModel):
+    name: str
+    email: EmailStr
+    url_profile_picture: str | None = None
 
 
 class LoginRequest(BaseModel):
-    correo: EmailStr
-    contraseña: str
+    email: EmailStr
+    password: str
 
 
-class UsuarioCreate(UsuarioBase):
-    contraseña: str
+class UserCreate(UserBase):
+    password: str
 
 
-class UsuarioResponse(UsuarioBase):
-    id_usuario: int
+class UserResponse(UserBase):
+    id: int
 
     class Config:
         from_attributes = True
+
+
+class TokenResponse(BaseModel):
+    access_token: str
+    token_type: str

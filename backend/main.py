@@ -2,8 +2,21 @@ from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
 from src import models, crud, schemas, database, auth
 from datetime import timedelta
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+origins = [
+    "http://localhost:5173",  # Frontend URL
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,  # Allowed origins
+    allow_credentials=True,
+    allow_methods=["*"],  # Allow all HTTP methods
+    allow_headers=["*"],  # Allow all headers
+)
 
 models.Base.metadata.create_all(bind=database.engine)
 
@@ -16,25 +29,21 @@ def get_db():
         db.close()
 
 
-@app.post("/usuarios/", response_model=schemas.UsuarioResponse)
-def crear_usuario(usuario: schemas.UsuarioCreate,
-                  db: Session = Depends(get_db)):
-    db_usuario = crud.get_usuario_by_correo(db, usuario.correo)
-    if db_usuario:
-        raise HTTPException(status_code=400, detail="Correo ya registrado")
-    return crud.create_usuario(db, usuario)
+@app.post("/register/", response_model=schemas.UserResponse)
+def crear_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
+    db_user = crud.get_user_by_email(db, user.email)
+    if db_user:
+        raise HTTPException(status_code=400, detail="User already registered.")
+    return crud.create_user(db, user)
 
 
-@app.post("/login/")
-def login_usuario(request: schemas.LoginRequest,
-                  db: Session = Depends(get_db)):
-    usuario = crud.get_usuario_by_correo(db, request.correo)
-    if not usuario or not auth.verify_password(request.contraseña,
-                                               usuario.contraseña):
-        raise HTTPException(status_code=400, detail="Credenciales incorrectas")
+@app.post("/login/", response_model=schemas.TokenResponse)
+def login_user(request: schemas.LoginRequest, db: Session = Depends(get_db)):
+    user = crud.get_user_by_email(db, request.email)
+    if not user or not auth.verify_password(request.password, user.password):
+        raise HTTPException(status_code=400, detail="Wrong credentials.")
 
     access_token = auth.create_access_token(
-        data={"sub": usuario.correo},
-        expires_delta=timedelta(minutes=auth.ACCESS_TOKEN_EXPIRE_MINUTES)
-    )
-    return {"access_token": access_token}
+        data={"sub": user.email},
+        expires_delta=timedelta(minutes=auth.ACCESS_TOKEN_EXPIRE_MINUTES))
+    return {"access_token": access_token, "token_type": "bearer", "user": user}
