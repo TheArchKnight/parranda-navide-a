@@ -1,4 +1,5 @@
-import React, { JSX, useState } from 'react';
+import { JSX, useState } from 'react';
+import * as React from 'react';
 import { Menu, LogOut, User } from 'lucide-react';
 
 interface NavItem {
