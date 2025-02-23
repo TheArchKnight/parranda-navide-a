@@ -3,8 +3,8 @@ import uvasGif from '../assets/las-12-uvas.gif';
 
 const Las12Uvas: React.FC = () => {
     return (
-        <div className="flex flex-1 items-center justify-center w-full h-full bg-white text-red-700">
-            <div className="w-full h-full flex flex-col items-center justify-start bg-red-100/80 p-8 shadow-lg">
+        <div className="flex flex-1 items-center justify-center w-full h-full text-red-700">
+            <div className="w-full h-full flex flex-col items-center justify-start p-8">
                 
                 <h1 className="text-5xl font-extrabold drop-shadow-md flex items-center gap-2">
                     🍇 Las 12 Uvas 🍇
