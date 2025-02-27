@@ -1,6 +1,10 @@
 import { JSX, useState } from 'react';
 import * as React from 'react';
-import { Menu, LogOut, User } from 'lucide-react';
+import { Menu, LogOut } from 'lucide-react';
+import { usePerfil } from "../hooks/AsignarPerfil";
+
+
+
 
 interface NavItem {
   name: string;
@@ -8,14 +12,12 @@ interface NavItem {
 }
 
 interface NavbarProps {
-  nickname: string;
   navItems: NavItem[];
   defaultComponent?: JSX.Element;
   onLogout: () => void;
 }
 
 const Navbar: React.FC<NavbarProps> = ({ 
-  nickname, 
   navItems, 
   defaultComponent,
   onLogout
@@ -25,6 +27,9 @@ const Navbar: React.FC<NavbarProps> = ({
   const [currentComponent, setCurrentComponent] = useState<JSX.Element>(
     defaultComponent || navItems[0].component
   );
+
+  const { obtenerDatosUsuario } = usePerfil();
+  const user = obtenerDatosUsuario(); 
 
   const handleNavigation = (name: string, component: JSX.Element) => {
     setSelectedName(name);
@@ -45,13 +50,16 @@ const Navbar: React.FC<NavbarProps> = ({
             <Menu size={24} />
           </button>
         </div>
-
         <div className="p-4 flex flex-col items-center border-b border-red-500">
-          <div className="bg-white rounded-full p-3 mb-2">
-            <User className="text-red-600" size={24} />
+        <div className="bg-white rounded-full overflow-hidden w-16 h-16 mb-2">
+            <img 
+              src={user?.photo /*/assets/images/perfil-defecto.png */ }
+              alt="Foto de perfil" 
+              className="w-full h-full object-cover"
+            />
           </div>
           {isExpanded && (
-            <span className="text-sm font-medium truncate">{nickname}</span>
+            <span className="text-sm font-medium truncate">{user?.name}</span>
           )}
         </div>
 

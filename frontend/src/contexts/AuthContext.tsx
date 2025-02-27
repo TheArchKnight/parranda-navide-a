@@ -1,9 +1,11 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { User } from '../types/auth';
 import { authService } from '../services/authService';
+import defaultPhoto from "../assets/images/perfil-defecto.png"
 
 interface AuthContextType {
   user: User | null;
+  setUser: React.Dispatch<React.SetStateAction<User | null>>;
   loading: boolean;
   login: (email: string, password: string) => Promise<void>;
   register: (name: string, email: string, password: string) => Promise<void>;
@@ -15,12 +17,17 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
-
+  
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
       const user = authService.verifyToken(token);
-      setUser(user);
+      setUser({
+        id: user?.id ?? "", 
+        email: user?.email ?? "", 
+        name: user?.name ?? "Usuario Anónimo", 
+        photo: user?.photo || defaultPhoto, 
+      });
     }
     setLoading(false);
   }, []);
@@ -30,15 +37,25 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     console.log(email, password);
     const { user, token } = await authService.login({ email, password });
     localStorage.setItem('token', token);
-    setUser(user);
+    setUser({
+      id: user?.id, 
+      email: user?.email, 
+      name: user?.name , 
+      photo: user?.photo , 
+    });
     setLoading(false);
   };
 
   const register = async (name: string, email: string, password: string) => {
     setLoading(true);
-    const { user, token } = await authService.register({ name, email, password });
+    const { user, token } = await authService.register({ name, email, password, photo: defaultPhoto });
     localStorage.setItem('token', token);
-    setUser(user);
+    setUser({
+      id: user.id,
+      email: user.email,
+      name: user.name,
+      photo: user.photo,
+    });
     setLoading(false);
   };
 
@@ -48,7 +65,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, register, logout }}>
+    <AuthContext.Provider value={{ user, setUser, loading, login, register, logout }}>
       {children}
     </AuthContext.Provider>
   );

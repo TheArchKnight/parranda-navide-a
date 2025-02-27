@@ -5,7 +5,8 @@ import { LoginCredentials, RegisterCredentials, User } from '../types/auth';
 const MOCK_USERS: User[] = [{
   id: "test123",
   email: "test@example.com",
-  name: "Test User"
+  name: "Test User",
+  photo: "/assets/images/perfil-defecto.png",
 }];
 
 function generateToken(userId: string): string {
@@ -44,6 +45,7 @@ export const authService = {
       id: Math.random().toString(36).substr(2, 9),
       email: credentials.email,
       name: credentials.name,
+      photo: "../assets/images/perfil-defecto.png",
     };
 
     MOCK_USERS.push(newUser);
@@ -59,5 +61,18 @@ export const authService = {
     } catch {
       return null;
     }
-  }
+  },
+  updateProfile: async (userId: string, data: { name?: string }) => {
+    // Lógica para actualizar el nombre del usuario en la base de datos
+  },
+
+  updatePassword: async (userId: string, newPassword: string) => {
+    // Lógica para actualizar la contraseña del usuario en la base de datos
+  },
+
+  updateProfilePicture: async (userId: string, formData: FormData) => {
+    // Lógica para actualizar la foto de perfil en la base de datos
+  },
+
+
 };

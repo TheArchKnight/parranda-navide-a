@@ -2,6 +2,7 @@ export interface User {
   id: string;
   email: string;
   name: string;
+  photo: string;
 }
 
 export interface LoginCredentials {
@@ -11,4 +12,5 @@ export interface LoginCredentials {
 
 export interface RegisterCredentials extends LoginCredentials {
   name: string;
+  photo: string;
 }
