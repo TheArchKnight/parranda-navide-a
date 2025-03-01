@@ -1,5 +1,5 @@
 import React from 'react';
-import Jesus from '../../assets/jesus.jpg';
+import Jesus from '../../assets/Jesus.jpg';
 
 const OracionJesus: React.FC = () => {
     return (

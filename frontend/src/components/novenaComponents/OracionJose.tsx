@@ -1,5 +1,5 @@
 import React from 'react';
-import Jose from '../../assets/jose.jpg';
+import Jose from '../../assets/Jose.jpg';
 
 const OracionJose: React.FC = () => {
     return (

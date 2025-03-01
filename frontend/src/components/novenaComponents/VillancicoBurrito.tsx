@@ -1,5 +1,5 @@
 import React from "react";
-import burritoGif from "../../assets/burrito.gif"; // Asegúrate de que la ruta sea correcta
+import burritoGif from "../../assets/Burrito.gif"; // Asegúrate de que la ruta sea correcta
 
 const VillancicoBurrito: React.FC = () => {
   return (

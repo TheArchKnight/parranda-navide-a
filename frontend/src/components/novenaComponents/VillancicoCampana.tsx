@@ -1,5 +1,5 @@
 import React from "react";
-import campanaGif from "../../assets/campana.gif"; // Asegúrate de que la ruta sea correcta
+import campanaGif from "../../assets/Campana.gif"; // Asegúrate de que la ruta sea correcta
 
 const VillancicoCampana: React.FC = () => {
   return (

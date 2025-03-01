@@ -1,5 +1,5 @@
 import React from "react";
-import nanitaGif from "../../assets/nanita.gif"; // Asegúrate de que la ruta sea correcta
+import nanitaGif from "../../assets/Nanita.gif"; // Asegúrate de que la ruta sea correcta
 
 const VillancicoNanita: React.FC = () => {
   return (
