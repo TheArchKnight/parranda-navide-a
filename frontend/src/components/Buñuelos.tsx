@@ -1,5 +1,7 @@
 import React from 'react';
 import recetaGif from '../assets/buñuelos.gif';
+import Rating from './Rating';
+import Comments from './Comments';
 
 const Buñuelos: React.FC = () => {
     return (
@@ -42,6 +44,19 @@ const Buñuelos: React.FC = () => {
                     <li>Formar bolitas y freír en aceite caliente hasta que estén doradas.</li>
                     <li>Escurrir en papel absorbente y servir calientes.</li>
                 </ol>
+
+                <div className="w-full mt-10">
+                    <h2 className="text-2xl font-bold text-center mb-3">⭐ Califica esta receta</h2>
+                    <div className="flex justify-center">
+                        <Rating recipeId="buñuelos" />
+                    </div>
+                </div>
+
+                <div className="w-full max-w-2xl mx-auto mt-10 bg-white p-5 rounded-lg shadow-md">
+                    <h2 className="text-2xl font-bold text-center mb-3">💬 Comentarios</h2>
+                    <Comments recipeId="buñuelos" />
+                </div>
+
             </div>
         </div>
     );

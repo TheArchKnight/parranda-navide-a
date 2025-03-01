@@ -1,5 +1,7 @@
 import React from 'react';
 import recetaGif from '../assets/lechona.gif';
+import Rating from './Rating';
+import Comments from './Comments';
 
 const Lechona: React.FC = () => {
     return (
@@ -41,6 +43,19 @@ const Lechona: React.FC = () => {
                     <li>Rellenar la pierna de cerdo con la mezcla y hornear por 4 horas.</li>
                     <li>Servir caliente acompañado de arepa blanca.</li>
                 </ol>
+
+                <div className="w-full mt-10">
+                    <h2 className="text-2xl font-bold text-center mb-3">⭐ Califica esta receta</h2>
+                    <div className="flex justify-center">
+                        <Rating recipeId="lechona" />
+                    </div>
+                </div>
+
+                <div className="w-full max-w-2xl mx-auto mt-10 bg-white p-5 rounded-lg shadow-md">
+                    <h2 className="text-2xl font-bold text-center mb-3">💬 Comentarios</h2>
+                    <Comments recipeId="lechona" />
+                </div>
+
             </div>
         </div>
     );
