@@ -16,7 +16,7 @@ const PrenderVelitas: React.FC = () => {
                 <img 
                     src={velitasGif} 
                     alt="Prender Velitas" 
-                    className="rounded-lg shadow-md transition-all transform hover:scale-105 mt-6"
+                    className="w-84 h-64 rounded-lg shadow-md transition-all transform hover:scale-105 mt-6 border-4 border-red-500"
                 />
 
                 <p className="text-xl leading-relaxed mt-6 max-w-2xl text-center">

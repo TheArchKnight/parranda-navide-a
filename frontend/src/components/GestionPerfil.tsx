@@ -5,7 +5,7 @@ import { Button } from "../components/formComponents/Button";
 import PasswordStrengthChecker from "./formComponents/PasswordStrengthChecker";
 import ConfirmPasswordChecker from "../components/formComponents/ConfirmPasswordChecker";
 import PasswordInput from "../components/formComponents/PasswordInput";
-import UploadPhoto from "./UploadPhoto";
+import UploadPhoto from "./formComponents/UploadPhoto";
 import defaultPhoto from "../assets/images/profile-picture.png";
 
 const GestionPerfil: React.FC = () => {
