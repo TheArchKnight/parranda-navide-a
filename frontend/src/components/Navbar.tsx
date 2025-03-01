@@ -1,6 +1,6 @@
 import { JSX, useState } from 'react';
 import * as React from 'react';
-import { Menu, LogOut, User } from 'lucide-react';
+import { Menu, LogOut } from 'lucide-react';
 
 interface NavItem {
   name: string;
@@ -47,9 +47,10 @@ const Navbar: React.FC<NavbarProps> = ({
         </div>
 
         <div className="p-4 flex flex-col items-center border-b border-red-500">
-          <div className="bg-white rounded-full p-3 mb-2">
-            <User className="text-red-600" size={24} />
-          </div>
+        <div className="bg-white rounded-full p-3 mb-2 w-10 h-10 flex items-center justify-center text-red-500 font-bold text-lg">
+          {nickname.charAt(0).toUpperCase()}
+        </div>
+
           {isExpanded && (
             <span className="text-sm font-medium truncate">{nickname}</span>
           )}
