@@ -26,6 +26,7 @@ const anton = "/music/anton.mp3";
 const tutaina = "/music/tutaina.mp3";
 const campanaSobreCampana = "/music/Campana Sobre Campana.mp3";
 const pecesEnElRio = "/music/peces en el rio.mp3"
+const aguilaRoja = "/music/Aguila Roja.mp3"
 
 /*
 import cariñito from "../../assets/music/Cariñito.mp3";
@@ -315,6 +316,16 @@ export const cancion: Song[] = [
     {
         id_cancion: 1,
         genero: "Vallenato-Navideño",
+        nombre: 'Aguila Roja',
+        artista: ['Café Aguila Roja'],
+        url_audio: aguilaRoja,
+        duration: '0:42',
+        image: imgVallenatoNavideño
+
+    },
+    {
+        id_cancion: 2,
+        genero: "Vallenato-Navideño",
         nombre: 'Mensaje de Navidad',
         artista: ['Diomedes Díaz'],
         url_audio: mensajeDeNavidad,
@@ -322,7 +333,7 @@ export const cancion: Song[] = [
         image: imgVallenatoNavideño
     },
     {
-        id_cancion: 2,
+        id_cancion: 3,
         genero: "Vallenato-Navideño",
         nombre: 'Bendito diciembre',
         artista: ['Los Betos'],
@@ -331,7 +342,7 @@ export const cancion: Song[] = [
         image: imgVallenatoNavideño
     },
     {
-        id_cancion: 3,
+        id_cancion: 4,
         genero: "Vallenato-Navideño",
         nombre: '25 de diciembre',
         artista: ['Diomedes Díaz'],
@@ -340,7 +351,7 @@ export const cancion: Song[] = [
         image: imgVallenatoNavideño
     },
     {
-        id_cancion: 4,
+        id_cancion: 5,
         genero: "Vallenato-Navideño",
         nombre: 'En estas navidades',
         artista: ['Jairo Serrano'],
@@ -349,7 +360,7 @@ export const cancion: Song[] = [
         image: imgVallenatoNavideño
     },
     {
-        id_cancion: 5,
+        id_cancion: 6,
         genero: "Vallenato-Navideño",
         nombre: 'Un osito dormilon ',
         artista: ['Binomio de Oro'],
@@ -410,6 +421,7 @@ export const cancion: Song[] = [
         url_audio: pecesEnElRio,
         duration: '2:12',
         image: imgVillancicosTropicales
-    }
+    },
+    
 
 ]

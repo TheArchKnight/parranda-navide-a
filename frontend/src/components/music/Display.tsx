@@ -1,7 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import DisplayHome from "./DisplayHome";
 import DisplayAlbum from "./DisplayAlbum";
-import PlayerContextProvider from "../../contexts/PlayerContextProvider";
 
 const Display = () => {
     return (
@@ -10,9 +9,7 @@ const Display = () => {
             <Routes>
                 <Route path="*" element={<DisplayHome/>} />
                 <Route path="/album/:id_lista" element={
-                    <PlayerContextProvider>
                         <DisplayAlbum/>
-                    </PlayerContextProvider>
                     } />
                 </Routes>
             </div>

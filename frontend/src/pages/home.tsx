@@ -5,7 +5,6 @@ import Navbar from '../components/Navbar';
 import Recetas from '../components/Recetas';
 import Rituales from '../components/rituales';
 import Biblioteca from '../components/Biblioteca';
-import PlayerContextProvider from '../contexts/PlayerContextProvider';
 
 const Home: React.FC = () => {
     const { user, logout } = useAuth();
@@ -24,11 +23,7 @@ const Home: React.FC = () => {
         },
         {
             name: 'Musica Navideña',
-            component: (
-                <PlayerContextProvider>
-                    <Biblioteca></Biblioteca>
-                </PlayerContextProvider>
-            )
+            component: <Biblioteca/>,
         },
     ];
 

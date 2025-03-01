@@ -16,9 +16,9 @@ const Player = () => {
         <div className="h-[10%] bg-red-500 flex justify-between items-center text-white px-4">
             <div className="hidden lg:flex items-center gap-4">
                 <img className="w-12" src ={track.image} alt=""/> 
-                <div className="w-50 overflow-hidden">
-                    <p >{track.nombre}</p>
-                    <span className="text-sm text-white">{track.artista}</span>
+                <div className="w-40 overflow-hidden truncate">
+                    <p className="text-sm font-semibold truncate">{track.nombre}</p>
+                    <span className="text-xs text-white truncate">{track.artista}</span>
                 </div>
 
             </div>
