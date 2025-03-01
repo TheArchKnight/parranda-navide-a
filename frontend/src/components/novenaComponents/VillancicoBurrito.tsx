@@ -1,7 +1,18 @@
 import React from "react";
 import burritoGif from "../../assets/Burrito.gif"; // Asegúrate de que la ruta sea correcta
+import { useContext } from "react";
+import { PlayerContext } from "../../contexts/PlayerContextProvider";
+
+
 
 const VillancicoBurrito: React.FC = () => {
+  const context = useContext(PlayerContext);
+
+    if (!context) {
+        throw new Error("DisplayAlbum debe estar dentro de un <PlayerContextProvider>");
+    }
+
+    const { playWithId } = context;
   return (
     <div className="flex flex-1 items-center justify-center w-full h-full text-purple-600">
       <div className="w-full h-full flex flex-col items-center justify-start p-8">
@@ -18,7 +29,7 @@ const VillancicoBurrito: React.FC = () => {
           height={400} 
         />
 
-        <button 
+        <button onClick={() => playWithId(1, "Villancicos-Tropicales", "5")}
           className="mt-6 px-6 py-3 bg-purple-600 text-white text-lg font-semibold rounded-lg shadow-md transition-all
                      hover:bg-purple-700 active:scale-95"
         >
