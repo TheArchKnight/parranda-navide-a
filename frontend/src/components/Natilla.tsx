@@ -1,5 +1,7 @@
 import React from 'react';
 import recetaGif from '../assets/natilla.gif';
+import Rating from './Rating';
+import Comments from './Comments';
 
 const Natilla: React.FC = () => {
     return (
@@ -46,8 +48,19 @@ const Natilla: React.FC = () => {
                     <li>Opcional: decorar con coco rallado o queso rallado.</li>
                 </ol>
                 
+                <div className="w-full mt-10">
+                    <h2 className="text-2xl font-bold text-center mb-3">⭐ Califica esta receta</h2>
+                    <div className="flex justify-center">
+                        <Rating recipeId="natilla" />
+                    </div>
+                </div>
+
+                <div className="w-full max-w-2xl mx-auto mt-10 bg-white p-5 rounded-lg shadow-md">
+                    <h2 className="text-2xl font-bold text-center mb-3">💬 Comentarios</h2>
+                    <Comments recipeId="natilla" />
+                </div>
+
             </div>
-            
         </div>
     );
 };
