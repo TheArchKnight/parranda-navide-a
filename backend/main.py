@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
 from src import crud, schemas, auth
-from src.database import get_db
+from src.database import get_db, create_db
 from datetime import timedelta
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -18,6 +18,9 @@ app.add_middleware(
     allow_methods=["*"],  # Allow all HTTP methods
     allow_headers=["*"],  # Allow all headers
 )
+
+
+create_db()
 
 
 @app.post("/register/", response_model=schemas.UserResponse,
