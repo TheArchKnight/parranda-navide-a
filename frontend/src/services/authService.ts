@@ -14,6 +14,7 @@ export const authService = {
     if(response.status === 400){
       throw new Error("Wrong credentials.");
     }
+    console.log(response.data)
     const user: User = {
       id: response.data?.id,
       email: response.data?.email,

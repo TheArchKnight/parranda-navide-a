@@ -1,5 +1,6 @@
 import { useAuth } from "../contexts/AuthContext";
 import { useState } from "react";
+import api from "../services/api";
 
 export const usePerfil = () => {
   const { user, setUser } = useAuth(); 
@@ -10,29 +11,14 @@ export const usePerfil = () => {
   const actualizarNombre = async (nuevoNombre: string) => {
     setLoading(true);
     try {
-      if (!user) return; 
-      /*
-      {
-        "id": obtenerDatosUsuario()?.id
-        "name": nuevoNombre
-      }
-      */
+      if (!user) return;
 
-     /*
-      El backend debe devolver un JSON con la estructura:
-      {
-        "id": "id",
-        "name": "Nuevo Nombre",
-        "email": "email",
-        "photoUrl": "ruta-de-la-imagen.com/foto.jpg"
-      }
-      */
+      const response = await api.put("/users/", {
+        id: user.id,
+        name: nuevoNombre,
+      });
 
-      /*
-      const updatedUser = await response.json(); 
-      setUser(updatedUser);
-      */
-
+      setUser(response.data);
     } catch (error) {
       console.error("Error al actualizar el nombre:", error);
     } finally {
@@ -45,32 +31,18 @@ export const usePerfil = () => {
     try {
       if (!user) return;
 
-      /*
-      {
-        "id": obtenerDatosUsuario()?.id
-        "password": nuevaPassword
-      }
-      */
+      await api.post("/users/password", {
+        id: user.id,
+        new_password: nuevaPassword,
+      });
 
-      /*
-      El backend debe devolver un JSON con la estructura:
-      {
-        "message": "Contraseña actualizada correctamente"
-      }
-      */
-
-      /*
-      const updatedUser = await response.json(); 
-      setUser(updatedUser);
-      */
-
+      alert("Contraseña actualizada correctamente");
     } catch (error) {
       console.error("Error al actualizar la contraseña:", error);
     } finally {
       setLoading(false);
     }
   };
-
   const actualizarFoto = async (nuevaFoto: File) => {
     setLoading(true);
     try {

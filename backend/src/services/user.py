@@ -32,12 +32,18 @@ class UserService():
         access_token = auth.create_access_token(
             data={"sub": user.email},
             expires_delta=timedelta(minutes=auth.ACCESS_TOKEN_EXPIRE_MINUTES))
-        return {"access_token": access_token, "token_type": "bearer"}
+        return {
+            "access_token": access_token,
+            "token_type": "bearer",
+            "id": user.id,
+            "email": user.email,
+            "name": user.name
+        }
 
     def update_password(self, password_update: schemas.PasswordUpdate,
                         db: Session = Depends(get_db)):
         user = crud.get_user_by_id(db, password_update.id)
-        user.password = hash_password(password_update.old_password)
+        user.password = hash_password(password_update.new_password)
         db.commit()
         return {"message": "Contraseña actualizada correctamente"}
 

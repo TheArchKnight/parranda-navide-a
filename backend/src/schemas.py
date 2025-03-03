@@ -59,7 +59,7 @@ class UserResponse(UserBase):
         }
 
 
-class TokenResponse(BaseModel):
+class TokenResponse(UserResponse):
     access_token: str
     token_type: str
 
@@ -84,6 +84,5 @@ class UserUpdate(BaseModel):
 
 
 class PasswordUpdate(BaseModel):
-    old_password: str = Field(..., min_length=6)
     new_password: str = Field(..., min_length=6)
     id: int
