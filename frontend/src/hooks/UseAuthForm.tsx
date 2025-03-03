@@ -25,14 +25,14 @@ const useAuthForm = () => {
     try {
       if (isLogin) {
         await login(formData.email, formData.password)
-        navigate('/');
       } else {
-         await register(formData.name, formData.email, formData.password)
+        await register(formData.name, formData.email, formData.password)
       }
+      navigate('/');
     } catch (error) {
       console.error(error)
     }
-    
+
   }
 
   return { isLogin, setIsLogin, loading, formData, handleChange, handleSubmit }
