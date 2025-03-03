@@ -1,4 +1,4 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, Field
 from typing import Optional
 
 
@@ -70,3 +70,20 @@ class TokenResponse(BaseModel):
                 "token_type": "bearer"
             }
         }
+
+
+class UserUpdate(BaseModel):
+    id: Optional[int] = None
+    name: Optional[str] = None
+    email: Optional[EmailStr] = None
+    password: Optional[str] = None
+    age: Optional[int] = None
+
+    class Config:
+        from_attributes = True  # For ORM compatibility
+
+
+class PasswordUpdate(BaseModel):
+    old_password: str = Field(..., min_length=6)
+    new_password: str = Field(..., min_length=6)
+    id: int

@@ -3,12 +3,12 @@ import sys
 from fastapi import FastAPI
 from src.database import create_db
 from fastapi.middleware.cors import CORSMiddleware
+from src.routes.user import router as user_router
 
 
 project_root = Path(__file__).parent.parent
 sys.path.append(str(project_root))
 
-from src.routes.user import router as user_router
 
 app = FastAPI()
 
@@ -33,3 +33,4 @@ app.include_router(user_router, tags=["User"])
 @app.get("/")
 async def health_check():
     return {"status": "healthy"}
+

@@ -2,10 +2,24 @@ from sqlalchemy.orm import Session
 from src.models import User
 from src.schemas import UserCreate
 from src.auth import hash_password
+from fastapi import HTTPException, status
+
+
+def _user_not_found(user):
+    if not user:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail="User not found")
+    return user
 
 
 def get_user_by_email(db: Session, email: str):
-    return db.query(User).filter(User.email == email).first()
+    user = db.query(User).filter(User.email == email).first()
+    return _user_not_found(user)
+
+
+def get_user_by_id(db: Session, id: int):
+    user = db.query(User).filter(User.id == id).first()
+    return _user_not_found(user)
 
 
 def create_user(db: Session, user: UserCreate):
