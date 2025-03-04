@@ -52,7 +52,7 @@ const DisplayAlbum = () => {
             <div
                 onClick={() => playWithId(item.id_cancion, item.genero, albumId)} 
                 key={index}
-                className="flex flex-col lg:grid lg:grid-cols-4 gap-2 p-2 items-center text-[#474242] hover:bg-[#1107072b] cursor-pointer rounded-md last:mb-5"
+                className="flex flex-col lg:grid lg:grid-cols-4 gap-2 p-2 items-center text-[#474242] lg:hover:bg-[#1107072b] cursor-pointer rounded-md last:mb-5"
             >
                 {/* 📌 Versión móvil y tablet: Imagen + Nombre + Artista debajo */}
                 <div className="flex items-center w-full lg:hidden">
