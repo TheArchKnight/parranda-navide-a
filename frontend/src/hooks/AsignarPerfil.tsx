@@ -51,17 +51,18 @@ export const usePerfil = () => {
       console.log("Subiendo archivo:", nuevaFoto);
 
       const formData = new FormData();
-      formData.append("id", String(user.id)); // Enviar el ID del usuario
-      formData.append("file", nuevaFoto); // Archivo de imagen
+      formData.append("id", user.id); // Enviar el ID del usuario
+      formData.append("profile_picture", nuevaFoto); // Nombre del campo debe coincidir con el backend
 
-      const response = await api.put("/users/", formData, {
+      const response = await api.put("/users/profile_picture", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
 
       console.log("Respuesta del servidor:", response.data);
-      setUser(response.data);
+      setUser(response.data); // Actualiza el usuario con la nueva URL de la foto
+
     } catch (error) {
       console.error("Error al actualizar la foto:", error);
     } finally {

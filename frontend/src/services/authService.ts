@@ -32,6 +32,7 @@ export const authService = {
     try {
       const response = await api.post("/login/", credentials);
       const { id, email, name, token } = response.data || {};
+      console.log(response.data);
       return { user: { id, email, name }, token };
     } catch (error) {
       handleError(error);
