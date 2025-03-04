@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { usePerfil } from "../hooks/AsignarPerfil";
+import useComments from "../hooks/UseComents";
 
 interface Comment {
   id: number;
@@ -13,35 +14,37 @@ interface CommentsProps {
 }
 
 const Comments: React.FC<CommentsProps> = ({ recipeId }) => {
+  const {
+    comments,
+    loading,
+    error,
+    fetchComments,
+    createComment,
+    updateComment,
+    deleteComment,
+  } = useComments();
+
   const { obtenerDatosUsuario } = usePerfil();
   const user = obtenerDatosUsuario();
   const username = user?.name || "Usuario";
 
-  const [comments, setComments] = useState<{ [key: string]: Comment[] }>({
-    buñuelos: [
-      { id: 1, username: "Juan", text: "Me quedaron súper esponjosos!" },
-      { id: 2, username: "Maria", text: "Los hice con queso doble crema y quedaron deliciosos!" },
-    ],
-    natilla: [
-      { id: 3, username: "Pedro", text: "La natilla quedó en su punto." },
-      { id: 4, username: "Ana", text: "Usé panela y me encantó el resultado." },
-    ],
-    lechona: [
-      { id: 5, username: "Luis", text: "Es la mejor receta de lechona que he probado!" },
-      { id: 6, username: "Sofía", text: "Un clásico de la gastronomía colombiana." },
-    ],
-  });
-
   const [newComment, setNewComment] = useState("");
   const [image, setImage] = useState<string | undefined>(undefined);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  
   const [editingCommentId, setEditingCommentId] = useState<number | null>(null);
-  const [editedText, setEditedText] = useState("");
+  const [editedText, setEditedText] = useState<string>("");
   const [editedImage, setEditedImage] = useState<string | undefined>(undefined);
 
-  const handleAddComment = () => {
-    if (!newComment.trim() && !image) return;
+  // Estado local solo para comentarios con imagen
+  const [localComments, setLocalComments] = useState<Comment[]>([]); 
+
+  useEffect(() => {
+    fetchComments(recipeId);
+  }, [recipeId]);
+
+  // Función para agregar un comentario con imagen (solo local)
+  const handleAddCommentWithImage = () => {
+    if (!newComment.trim() && !image) return; // No permite comentarios vacíos sin imagen
 
     const newCommentObj: Comment = {
       id: Date.now(),
@@ -50,23 +53,57 @@ const Comments: React.FC<CommentsProps> = ({ recipeId }) => {
       image,
     };
 
-    setComments((prev) => ({
-      ...prev,
-      [recipeId]: [...(prev[recipeId] || []), newCommentObj],
-    }));
+    // Agregar el comentario con imagen al estado local
+    setLocalComments((prev) => [...prev, newCommentObj]);
 
+    // Limpiar los campos de entrada
     setNewComment("");
     setImage(undefined);
     (document.getElementById("file-input") as HTMLInputElement).value = "";
   };
 
-  const handleDeleteComment = (commentId: number) => {
-    setComments((prev) => ({
-      ...prev,
-      [recipeId]: prev[recipeId].filter((comment) => comment.id !== commentId),
-    }));
+  // Función para crear un comentario sin imagen (usando el hook)
+  const handleAddComment = () => {
+    if (newComment.trim()) {
+      createComment(newComment, user?.id || 0, recipeId);
+      setNewComment(""); // Limpiar campo de texto
+    }
   };
 
+  // Función para eliminar un comentario (con imagen o no)
+  const handleDeleteComment = (commentId: number) => {
+    setLocalComments((prev) => prev.filter((comment) => comment.id !== commentId));
+    deleteComment(commentId); // Llamada al hook para eliminar desde el servidor
+  };
+
+  // Función para editar un comentario
+  const handleEditComment = (comment: Comment) => {
+    setEditingCommentId(comment.id);
+    setEditedText(comment.text || "");
+    setEditedImage(comment.image);
+  };
+
+  // Guardar la edición del comentario
+  const handleSaveEdit = () => {
+    if (editingCommentId === null) return;
+
+    // Actualizar el comentario en el estado local y servidor
+    setLocalComments((prev) =>
+      prev.map((comment) =>
+        comment.id === editingCommentId
+          ? { ...comment, text: editedText || undefined, image: editedImage }
+          : comment
+      )
+    );
+    updateComment(editingCommentId, username, editedText); // Actualizar en el servidor
+
+    // Limpiar el estado de edición
+    setEditingCommentId(null);
+    setEditedText("");
+    setEditedImage(undefined);
+  };
+
+  // Función para manejar el cambio de imagen en un comentario
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
@@ -76,29 +113,7 @@ const Comments: React.FC<CommentsProps> = ({ recipeId }) => {
     }
   };
 
-  const handleEditComment = (comment: Comment) => {
-    setEditingCommentId(comment.id);
-    setEditedText(comment.text || "");
-    setEditedImage(comment.image);
-  };
-
-  const handleSaveEdit = () => {
-    if (editingCommentId === null) return;
-
-    setComments((prev) => ({
-      ...prev,
-      [recipeId]: prev[recipeId].map((comment) =>
-        comment.id === editingCommentId
-          ? { ...comment, text: editedText || undefined, image: editedImage }
-          : comment
-      ),
-    }));
-
-    setEditingCommentId(null);
-    setEditedText("");
-    setEditedImage(undefined);
-  };
-
+  // Función para subir la imagen cuando se edita el comentario
   const handleEditImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
@@ -111,7 +126,11 @@ const Comments: React.FC<CommentsProps> = ({ recipeId }) => {
   return (
     <div className="mt-6 p-4 border rounded-lg bg-gray-100 w-full max-w-2xl mx-auto">
       <div className="space-y-4">
-        {comments[recipeId]?.map((comment) => (
+        {loading && <p>Cargando comentarios...</p>}
+        {error && <p>Error: {error}</p>}
+
+        {/* Mostrar los comentarios tanto locales como los obtenidos del servidor */}
+        {[...comments, ...localComments].map((comment) => (
           <div key={comment.id} className="p-3 bg-white rounded shadow relative">
             {editingCommentId === comment.id ? (
               <>
@@ -169,8 +188,8 @@ const Comments: React.FC<CommentsProps> = ({ recipeId }) => {
         />
         <input id="file-input" type="file" accept="image/*" onChange={handleImageUpload} />
         {image && <img src={image} alt="Preview" className="w-20 h-20 rounded" />}
-        <button className="bg-red-500 text-white p-2 rounded" onClick={handleAddComment}>
-          Enviar comentario
+        <button className="bg-red-500 text-white p-2 rounded" onClick={image ? handleAddCommentWithImage : handleAddComment}>
+          {image ? "Enviar comentario con imagen" : "Enviar comentario"}
         </button>
       </div>
     </div>
