@@ -71,7 +71,3 @@ Thumbs.db
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
-
-Dockerfile.dev.backend
-docker-compose-dev.yml

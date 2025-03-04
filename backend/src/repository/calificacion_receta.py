@@ -8,9 +8,6 @@ class CalificacionRecetaRepository(GenericRepository[CalificacionReceta]):
 
     def get_recipe_rating_by_user(self, db, id_user, id_recipe):
         return db.query(self.model).filter(self.model.id_usuario == id_user, self.model.id_receta == id_recipe).first()
-
-    def get_recipe_rating(self, db, id_recipe):
-        return db.query(self.model).filter(self.model.id_receta == id_recipe).all()
-
-    def get_recipe_rating_avg(self, db, id_recipe):
+    
+    def get_recipe_rating_by_recipe(self, db, id_recipe):
         return db.query(self.model).filter(self.model.id_receta == id_recipe).all()

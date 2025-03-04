@@ -39,13 +39,9 @@ class CommentsService:
         return self.comments_repository.add(db, comment_data)
 
 
-    def get_comments_by_recipe(self, db: Session, code: str):
+    def get_comments_by_recipe(self, db: Session, code: int):
         self.comments_repository = CommentsRepository()
-        receta_repository = RecetaRepository()
-        receta = receta_repository.get_recipes_by_code(db, code)
-        if not receta:
-            return []
-        comments = self.comments_repository.get_comments_by_recipe(db, receta.id_receta)
+        comments = self.comments_repository.get_comments_by_recipe(db, code)
         return self._comments_to_response(db, comments)
     
     def update_comment(self, db: Session, comment_data: Comentario):
@@ -60,3 +56,11 @@ class CommentsService:
             comentario=comment_data.text
         )
         return comments_repository.update(db, comentario)
+    
+    def delete_comment(self, db: Session, comment_id: int):
+        comments_repository = CommentsRepository()
+        comment = comments_repository.get(db, comment_id)
+        if not comment:
+            raise Exception("Comment not found")
+        comments_repository.delete(db, comment_id)
+        return "Comment deleted"

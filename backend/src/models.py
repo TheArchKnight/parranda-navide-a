@@ -16,7 +16,7 @@ class User(Base):
 class Receta(Base):
     __tablename__ = "receta"
 
-    id_receta = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     nombre = Column(String, nullable=False)
     ingredientes = Column(String, nullable=False)  # Store as a comma-separated string
     instrucciones = Column(String, nullable=False)
@@ -24,10 +24,10 @@ class Receta(Base):
 
 class CalificacionReceta(Base):
     __tablename__ = "calificacion_receta"
-    id_calificacion = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     valor = Column(Integer, nullable=False)
     id_calificador = Column(Integer, ForeignKey("user.id"), nullable=False)
-    id_receta = Column(Integer, ForeignKey("receta.id_receta"), nullable=False)
+    id_receta = Column(Integer, ForeignKey("receta.id"), nullable=False)
 
 class Comentario(Base):
     __tablename__ = "comentario"
@@ -35,5 +35,5 @@ class Comentario(Base):
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     comentario = Column(String, nullable=False)
     id_usuario = Column(Integer, ForeignKey("user.id"), nullable=False)
-    id_receta = Column(Integer, ForeignKey("receta.id_receta"), nullable=False)
+    id_receta = Column(Integer, ForeignKey("receta.id"), nullable=False)
     respuesta_de = Column(Integer, ForeignKey("comentario.id"), nullable=True)
