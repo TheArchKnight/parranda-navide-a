@@ -90,26 +90,40 @@ const PlayerContextProvider = ({ children }: PlayerContextProviderProps) => {
     const toggleShuffle = () => {
         setIsShuffle(prev => !prev);
     };
-
+    
     const getRandomSong = () => {
-        let albumActual = [];
-        if (track.id_lista == "6"){
-            albumActual = cancion;
+        let cancionesDisponibles = [];
+    
+        if (track.id_lista === "6") {
+            // 🎵 Si estamos en "Radio-Navideña", permitimos elegir cualquier canción de toda la lista
+            cancionesDisponibles = cancion.filter(song => song.id_cancion !== track.id_cancion);
+        } else {
+            // 🎵 Si estamos en otro álbum, solo se eligen canciones del mismo género (álbum específico)
+            cancionesDisponibles = cancion.filter(song => song.genero === track.genero && song.id_cancion !== track.id_cancion);
         }
-        else {
-            albumActual = cancion.filter(song => song.genero === track.genero && song.id_cancion !== track.id_cancion);
-        }
-        if (albumActual.length === 0) 
+    
+        if (cancionesDisponibles.length === 0) {
+            console.error("No hay canciones disponibles para reproducción aleatoria.");
             return null;
-        let randomSong;
-        do {
-            randomSong = albumActual[Math.floor(Math.random() * albumActual.length)];
-        } while (randomSong.id_cancion === track.id_cancion && randomSong.genero === track.genero);
-        return randomSong;
+        }
+    
+        // Seleccionar una canción aleatoria
+        const randomIndex = Math.floor(Math.random() * cancionesDisponibles.length);
+        const randomSong = cancionesDisponibles[randomIndex];
+    
+        // 🔥 Mantenemos el mismo `id_lista` del track actual
+        return {
+            ...randomSong,
+            id_lista: track.id_lista,
         };
+    };
+    
+    
+    
 
     const playWithId = async (id_cancion: number, genero: string, id_lista: string) => {
         console.log("ALBUM: " + id_lista);
+
         const song = cancion.find(song => song.id_cancion === id_cancion && song.genero === genero);
         if (!song) {
             console.error("Canción no encontrada");
@@ -140,31 +154,90 @@ const PlayerContextProvider = ({ children }: PlayerContextProviderProps) => {
         }, 0);
     };
 
+    const generosOrdenados = [
+        "Chucu-Chucu",
+        "Cumbia-Navideña",
+        "Salsa-Navideña",
+        "Vallenato-Navideño",
+        "Villancicos-Tropicales",
+        "Radio-Navideña"
+    ];
+    
     const cancionSiguiente = async () => {
         if (isShuffle) {
             const nextSong = getRandomSong();
-            if (nextSong) playWithId(nextSong.id_cancion, nextSong.genero, track.id_lista);
+            if (nextSong) {
+                playWithId(nextSong.id_cancion, nextSong.genero, track.id_lista);  // 🔹 Mantiene id_lista = "6"
+            }
             return;
         }
+    
         const albumSongs = cancion.filter(song => song.genero === track.genero);
         const currentIndex = albumSongs.findIndex(song => song.id_cancion === track.id_cancion);
+    
         if (currentIndex < albumSongs.length - 1) {
-            playWithId(albumSongs[currentIndex + 1].id_cancion, albumSongs[currentIndex + 1].genero, track.id_lista, );
+            // 🔹 Si hay más canciones en el álbum, reproducir la siguiente sin cambiar el id_lista
+            playWithId(albumSongs[currentIndex + 1].id_cancion, albumSongs[currentIndex + 1].genero, track.id_lista);
+        } else {
+            // 🔹 Pasar al siguiente álbum en orden, pero mantener el id_lista = "6" si es Radio-Navideña
+            const currentGenreIndex = generosOrdenados.indexOf(track.genero);
+            const nextGenreIndex = (currentGenreIndex + 1) % generosOrdenados.length;
+            const nextGenre = generosOrdenados[nextGenreIndex];
+    
+            console.log("Cambiando al siguiente género: " + nextGenre);
+    
+            const nextGenreSongs = cancion.filter(song => song.genero === nextGenre);
+    
+            if (nextGenreSongs.length > 0) {
+                // 🔹 Si estamos en "Radio-Navideña", mantenemos el id_lista en "6"
+                const newIdLista = track.id_lista === "6" ? "6" : Lista_Canciones.find(album => album.tematica === nextGenre)?.id_lista || "6";
+    
+                playWithId(nextGenreSongs[0].id_cancion, nextGenreSongs[0].genero, newIdLista);
+            } else {
+                console.error("No hay canciones en el género siguiente.");
+            }
         }
     };
-
+    
+    
     const cancionPrevia = async () => {
         if (isShuffle) {
             const prevSong = getRandomSong();
-            if (prevSong) playWithId(prevSong.id_cancion, prevSong.genero, track.id_lista);
+            if (prevSong) {
+                playWithId(prevSong.id_cancion, prevSong.genero, track.id_lista);  // 🔹 Mantiene id_lista = "6"
+            }
             return;
         }
+    
         const albumSongs = cancion.filter(song => song.genero === track.genero);
         const currentIndex = albumSongs.findIndex(song => song.id_cancion === track.id_cancion);
+    
         if (currentIndex > 0) {
+            // 🔹 Si hay una canción anterior en el mismo álbum, reproducirla sin cambiar el id_lista
             playWithId(albumSongs[currentIndex - 1].id_cancion, albumSongs[currentIndex - 1].genero, track.id_lista);
+        } else {
+            // 🔹 Pasar al álbum anterior en orden, pero mantener el id_lista = "6" si es Radio-Navideña
+            const currentGenreIndex = generosOrdenados.indexOf(track.genero);
+            const prevGenreIndex = (currentGenreIndex - 1 + generosOrdenados.length) % generosOrdenados.length;
+            const prevGenre = generosOrdenados[prevGenreIndex];
+    
+            console.log("Cambiando al género anterior: " + prevGenre);
+    
+            const prevGenreSongs = cancion.filter(song => song.genero === prevGenre);
+    
+            if (prevGenreSongs.length > 0) {
+                // 🔹 Si estamos en "Radio-Navideña", mantenemos el id_lista en "6"
+                const newIdLista = track.id_lista === "6" ? "6" : Lista_Canciones.find(album => album.tematica === prevGenre)?.id_lista || "6";
+    
+                playWithId(prevGenreSongs[prevGenreSongs.length - 1].id_cancion, prevGenreSongs[prevGenreSongs.length - 1].genero, newIdLista);
+            } else {
+                console.error("No hay canciones en el género anterior.");
+            }
         }
     };
+    
+    
+    
     
     
 

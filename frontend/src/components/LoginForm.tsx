@@ -20,8 +20,8 @@ const  LoginForm = ({
 }: LoginFormProps)  => {
   const [showPassword, setShowPassword] = React.useState(false);
   return (
-    <div className="inset-0 w-full p-8">
-      <h2 className="text-2xl font-bold mb-6">Iniciar sesión</h2>
+    <div className="inset-0 w-full ">
+      <h2 className="text-2xl font-bold mb-6 text-center">Iniciar sesión</h2>
       <form onSubmit={onSubmit} className="space-y-4">
         <Input
           type="email"

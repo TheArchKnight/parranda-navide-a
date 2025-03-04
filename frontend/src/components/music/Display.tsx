@@ -5,7 +5,7 @@ import DisplayAlbum from "./DisplayAlbum";
 const Display = () => {
     return (
         <>
-            <div className="w-[100%] m-2 px-6 pt-4 rounded bg-gray text-black overflow-auto lg:w-[100%] lg:ml-0"> 
+            <div className="w-full h-full  p-3 pt-2 rounded bg-gray text-black lg:w-[100%] lg:ml-0"> 
             <Routes>
                 <Route path="*" element={<DisplayHome/>} />
                 <Route path="/album/:id_lista" element={

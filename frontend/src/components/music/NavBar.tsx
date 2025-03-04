@@ -12,14 +12,24 @@ const NavBar = () => {
 
     return (
         <>
-            <div className="w-full flex justify-between items-center font-semibold">
-                <div className="flex items-center gap-2">
-                    <img onClick={handleBack} className="w-8 bg-red-500 p-2 rounded-2xl cursor-pointer" src={icons.left_arrow} alt=""/>
-                    <img onClick={() => navigate(1)} className="w-8 bg-red-500 p-2 rounded-2xl cursor-pointer" src={icons.right_arrow} alt=""/>
-                </div>
-                <div className="flex items-center gap-2">
-                    <p className="bg-red-500 text-white text-[25px] px-10 py-1 rounded-full hidden md:block">Biblioteca Navideña</p>
-                </div>
+            <div className="w-full flex justify-end">
+                <p className="bg-red-500 text-white text-lg md:text-xl lg:text-2xl px-5 py-2 rounded-full">
+                    Biblioteca Navideña
+                </p>
+            </div>
+            <div className="w-full flex justify-start items-center gap-2 px-4 pb-1">
+                <img 
+                    onClick={handleBack} 
+                    className="w-10 h-10 bg-red-500 p-2 rounded-full cursor-pointer transition-transform hover:scale-105" 
+                    src={icons.left_arrow} 
+                    alt="Retroceder"
+                />
+                <img 
+                    onClick={() => navigate(1)} 
+                    className="w-10 h-10 bg-red-500 p-2 rounded-full cursor-pointer transition-transform hover:scale-105" 
+                    src={icons.right_arrow} 
+                    alt="Avanzar"
+                />
             </div>
         </>
     );

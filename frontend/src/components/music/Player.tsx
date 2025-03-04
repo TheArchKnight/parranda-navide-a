@@ -12,7 +12,7 @@ const Player = () => {
     const { track, seekBg, seekBar, isPlaying, play, pause, time, cancionPrevia, cancionSiguiente, seekCancion, toggleShuffle, isShuffle } = context;
 
     return (
-        <div className="fixed bottom-0 left-0 w-full bg-red-600 text-white p-3 flex flex-col items-center md:flex-row md:justify-center md:gap-6">
+        <div className="fixed bottom-0 left-0 w-full bg-red-500 text-white p-3 flex flex-col items-center md:flex-row md:justify-center md:gap-6">
             
             {/* 📌 Sección: Imagen y Detalles de la Canción */}
             <div className="flex items-center gap-3 w-full md:w-auto">
