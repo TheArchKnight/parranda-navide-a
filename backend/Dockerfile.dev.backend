@@ -1,0 +1,28 @@
+# Usa una imagen ligera
+FROM python:3.10-slim
+
+WORKDIR /app
+
+# Instala dependencias necesarias
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libpq-dev gcc libmagic-dev && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Copiar el archivo de requerimientos e instalar las dependencias
+COPY requirements.txt .
+
+# Instalar las dependencias, incluyendo herramientas de desarrollo
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Exponer el puerto 8000
+EXPOSE 8000
+
+# Crear directorio de media
+RUN mkdir -p /app/media/profile_pictures
+
+# Copiar solo los archivos esenciales para el entorno de desarrollo
+# (Esto se hace para que el código no se copie completamente desde el inicio, ya que usaremos volúmenes)
+COPY . .
+
+# Comando de inicio para el entorno de desarrollo (con recarga automática)
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]

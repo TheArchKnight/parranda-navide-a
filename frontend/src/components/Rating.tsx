@@ -1,37 +1,36 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Star } from "lucide-react";
+import useRating from "../hooks/UseRating";
 
 interface RatingProps {
-  recipeId: string;
+  recipeId: number;
 }
 
 const Rating: React.FC<RatingProps> = ({ recipeId }) => {
-  const [ratings, setRatings] = useState<{ [key: string]: { total: number; votes: number; userRating: number } }>({
-    "buñuelos": { total: 15, votes: 5, userRating: 0 },
-    "natilla": { total: 8, votes: 4, userRating: 0 },
-    "lechona": { total: 30, votes: 6, userRating: 0 },
-  });
+  // Usar el hook useRating
+  const { rating, loading, error, fetchRating, submitRating } = useRating();
 
-  const userRating = ratings[recipeId]?.userRating || 0;
-  const averageRating = ratings[recipeId]?.votes > 0 ? ratings[recipeId].total / ratings[recipeId].votes : 0;
-  const totalVotes = ratings[recipeId]?.votes || 0;
+  const [userRating, setUserRating] = useState<number>(0);
 
-  const handleRating = (rating: number) => {
-    if (!ratings[recipeId]) return;
-  
-    const isNewVote = userRating === 0;
-  
-    const newTotal = ratings[recipeId].total - userRating + rating;
-    const newVotes = isNewVote ? ratings[recipeId].votes + 1 : ratings[recipeId].votes;
-  
-    const newRatings = {
-      ...ratings,
-      [recipeId]: { ...ratings[recipeId], total: newTotal, votes: newVotes, userRating: rating },
-    };
-  
-    setRatings(newRatings);
+  // Obtener las calificaciones al montar el componente o cuando se haya enviado una nueva calificación
+  useEffect(() => {
+    fetchRating(Number(recipeId)); // Cargar las calificaciones de la receta usando el ID
+  }, []); 
+
+
+  const averageRating = rating ? rating.promedio : 0;
+  const totalVotes = rating ? rating.votes : 0;
+
+  // Manejar la calificación del usuario
+  const handleRating = (ratingValue: number) => {
+    if (rating) {
+      submitRating(ratingValue, 1, Number(recipeId)); // Suponiendo que el id_calificador es 1 por ahora
+      setUserRating(ratingValue);
+    }
   };
-  
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
 
   return (
     <div className="flex flex-col items-center mt-4">
@@ -46,7 +45,9 @@ const Rating: React.FC<RatingProps> = ({ recipeId }) => {
           />
         ))}
       </div>
-      <p className="text-gray-700 text-sm mt-2">{averageRating.toFixed(1)} / 5 ({totalVotes} votos)</p>
+      <p className="text-gray-700 text-sm mt-2">
+        {averageRating} / 5 ({totalVotes} votos)
+      </p>
     </div>
   );
 };
