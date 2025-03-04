@@ -5,10 +5,15 @@ import Navbar from '../components/Navbar';
 import Recetas from '../components/Recetas';
 import Rituales from '../components/rituales';
 import Biblioteca from '../components/Biblioteca';
+import GestionPerfil from "../components/GestionPerfil"
 
 const Home: React.FC = () => {
     const { user, logout } = useAuth();
     const navItems = [
+        {
+            name: 'Pefil',
+            component: <GestionPerfil/>
+        },
         {
             name: 'Novenas',
             component: <Novenas />,
@@ -23,14 +28,15 @@ const Home: React.FC = () => {
         },
         {
             name: 'Musica Navideña',
-            component: <Biblioteca/>,
+            component:
+                    <Biblioteca></Biblioteca>
         },
     ];
 
     return (
         <>
             <Navbar 
-                nickname={user?.name || ''} 
+                nickname={user?.name || ''}
                 navItems={navItems} 
                 onLogout={logout}
             />

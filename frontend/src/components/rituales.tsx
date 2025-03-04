@@ -41,8 +41,8 @@ const Rituales: React.FC = () => {
         ))}
       </nav>
 
-      <main className="flex flex-1 w-full h-full">
-        <div className="w-full h-full">{currentComponent}</div>
+      <main className="flex-1 w-full h-screen overflow-auto bg-red-50 p-6">
+        <div className="max-w-4xl mx-auto">{currentComponent}</div>
       </main>
     </div>
   );

@@ -3,7 +3,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 const useAuthForm = () => {
-  const { login,loading } = useAuth();
+  const { login,loading,register } = useAuth();
   const [isLogin, setIsLogin] = useState(true)
   const [formData, setFormData] = useState({
     name: '',
@@ -25,14 +25,14 @@ const useAuthForm = () => {
     try {
       if (isLogin) {
         await login(formData.email, formData.password)
-        navigate('/');
       } else {
-        // await register(formData.email, formData.password)
+        await register(formData.name, formData.email, formData.password)
       }
+      navigate('/');
     } catch (error) {
       console.error(error)
     }
-    
+
   }
 
   return { isLogin, setIsLogin, loading, formData, handleChange, handleSubmit }

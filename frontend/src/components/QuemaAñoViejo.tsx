@@ -3,8 +3,8 @@ import quemaGif from '../assets/QuemaAñoViejo.gif';
 
 const QuemaAnoViejo: React.FC = () => {
     return (
-        <div className="flex flex-1 items-center justify-center w-full h-full bg-white text-red-700">
-            <div className="w-full h-full flex flex-col items-center justify-start bg-red-100/80 p-8 shadow-lg">
+        <div className="flex flex-1 items-center justify-center w-full h-full text-red-700">
+            <div className="w-full h-full flex flex-col items-center justify-start p-8">
                 
                 <h1 className="text-5xl font-extrabold drop-shadow-md flex items-center gap-2">
                     🔥 Quema del Año Viejo 🔥
@@ -16,7 +16,7 @@ const QuemaAnoViejo: React.FC = () => {
                 <img 
                     src={quemaGif} 
                     alt="Quema del Año Viejo" 
-                    className="rounded-lg shadow-md transition-all transform hover:scale-105 mt-6"
+                    className="w-72 h-72 rounded-lg shadow-md transition-all transform hover:scale-105 mt-6 border-4 border-red-500"
                 />
 
                 <p className="text-xl leading-relaxed mt-6 max-w-2xl text-center">

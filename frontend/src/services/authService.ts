@@ -1,6 +1,6 @@
 import { jwtDecode } from "jwt-decode";
 import { LoginCredentials, RegisterCredentials, User } from '../types/auth';
-
+import  api  from "./api"
 // Mock user for testing
 const MOCK_USERS: User[] = [{
   id: "test123",
@@ -8,47 +8,56 @@ const MOCK_USERS: User[] = [{
   name: "Test User"
 }];
 
-function generateToken(userId: string): string {
-  const header = btoa(JSON.stringify({ alg: 'HS256', typ: 'JWT' }));
-  const payload = btoa(JSON.stringify({
-    userId,
-    exp: Math.floor(Date.now() / 1000) + (60 * 60) // 1 hour
-  }));
-  const signature = btoa('dummy-signature');
-  
-  return `${header}.${payload}.${signature}`;
-}
+const handleError = (error: any): never => {
+  if (error.response) {
+    const { status } = error.response;
+    if (status === 400) {
+      alert("Contraseña incorrecta.");
+      throw new Error("Wrong credentials.");
+    } else if (status === 404) {
+      alert("Usuario no encontrado.");
+      throw new Error("User not found.");
+    } else if (status === 409) {
+      alert("El usuario ya existe.");
+      throw new Error("User already exists.");
+    }
+  }
+  throw new Error("An unexpected error occurred.");
+};
 
 export const authService = {
-  login: async (credentials: LoginCredentials): Promise<{ user: User; token: string }> => {
-    await new Promise(resolve => setTimeout(resolve, 500));
-    
-    // For testing purposes, accept any password for the test user
-    const user = MOCK_USERS.find(u => u.email === credentials.email);
-    if (!user || credentials.email !== "test@example.com" || credentials.password !== "password123") {
-      throw new Error('Invalid credentials');
-    }
+  login: async (
+    credentials: LoginCredentials,
+    setLoading: React.Dispatch<React.SetStateAction<boolean>>
+  ): Promise<{ user: User; token: string }> => {
+    try {
+      const response = await api.post("/login/", credentials);
+      const { id, email, name, access_token, url_profile_picture } = response.data || {};
 
-    const token = generateToken(user.id);
-    return { user, token };
+      return {
+        user: { id, email, name, photoUrl: url_profile_picture }, // Map url_profile_picture to photoUrl
+        token: access_token
+      };
+    } catch (error) {
+      handleError(error);
+      return Promise.reject(error);
+    } finally {
+      setLoading(false);
+    }
   },
-
-  register: async (credentials: RegisterCredentials): Promise<{ user: User; token: string }> => {
-    await new Promise(resolve => setTimeout(resolve, 500));
-    
-    if (MOCK_USERS.some(u => u.email === credentials.email)) {
-      throw new Error('User already exists');
+  register: async (
+    credentials: RegisterCredentials,
+    setLoading: React.Dispatch<React.SetStateAction<boolean>>
+  ): Promise<{ user: User; token: string }> => {
+    try {
+      await api.post("/register/", credentials);
+      return authService.login(credentials, setLoading);
+    } catch (error: any) {
+      handleError(error);
+      return Promise.reject(error);
+    } finally {
+      setLoading(false);
     }
-
-    const newUser: User = {
-      id: Math.random().toString(36).substr(2, 9),
-      email: credentials.email,
-      name: credentials.name,
-    };
-
-    MOCK_USERS.push(newUser);
-    const token = generateToken(newUser.id);
-    return { user: newUser, token };
   },
 
   verifyToken: (token: string): User | null => {

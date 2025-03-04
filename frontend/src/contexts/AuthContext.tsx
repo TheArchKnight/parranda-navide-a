@@ -4,6 +4,7 @@ import { authService } from '../services/authService';
 
 interface AuthContextType {
   user: User | null;
+  setUser: React.Dispatch<React.SetStateAction<User | null>>;
   loading: boolean;
   login: (email: string, password: string) => Promise<void>;
   register: (name: string, email: string, password: string) => Promise<void>;
@@ -27,16 +28,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const login = async (email: string, password: string) => {
     setLoading(true);
-    console.log(email, password);
-    const { user, token } = await authService.login({ email, password });
-    localStorage.setItem('token', token);
-    setUser(user);
+    const { user, token } = await authService.login({ email, password }, setLoading);
+    localStorage.setItem("token", token);
+    setUser(user); // Now user includes photoUrl
     setLoading(false);
   };
 
   const register = async (name: string, email: string, password: string) => {
     setLoading(true);
-    const { user, token } = await authService.register({ name, email, password });
+    const { user, token } = await authService.register({ name, email, password }, setLoading);
     localStorage.setItem('token', token);
     setUser(user);
     setLoading(false);
@@ -48,7 +48,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, register, logout }}>
+    <AuthContext.Provider value={{ user,setUser, loading, login, register, logout }}>
       {children}
     </AuthContext.Provider>
   );

@@ -3,8 +3,8 @@ import uvasGif from '../assets/las-12-uvas.gif';
 
 const Las12Uvas: React.FC = () => {
     return (
-        <div className="flex flex-1 items-center justify-center w-full h-full bg-white text-red-700">
-            <div className="w-full h-full flex flex-col items-center justify-start bg-red-100/80 p-8 shadow-lg">
+        <div className="flex flex-1 items-center justify-center w-full h-full text-red-700">
+            <div className="w-full h-full flex flex-col items-center justify-start p-8">
                 
                 <h1 className="text-5xl font-extrabold drop-shadow-md flex items-center gap-2">
                     🍇 Las 12 Uvas 🍇
@@ -16,7 +16,7 @@ const Las12Uvas: React.FC = () => {
                 <img 
                     src={uvasGif} 
                     alt="Las 12 Uvas en Año Nuevo" 
-                    className="rounded-lg shadow-md transition-all transform hover:scale-105 mt-6"
+                    className="w-64 h-84 rounded-lg shadow-md transition-all transform hover:scale-105 mt-6 border-4 border-red-500"
                 />
 
                 <p className="text-xl leading-relaxed mt-6 max-w-2xl text-center">
