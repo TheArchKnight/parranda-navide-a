@@ -47,37 +47,27 @@ export const usePerfil = () => {
     setLoading(true);
     try {
       if (!user) return;
-      console.log("file:");
-      console.log(nuevaFoto);
-      /*
-      {
-        "id": obtenerDatosUsuario()?.id
-        "profilePicture": nuevaFoto
-      }
-      */
 
-      /*
-      El backend debe devolver un JSON con la estructura:
-      {
-        "id": "id",
-        "name": "nombre",
-        "email": "email",
-        "photoUrl": "ruta-de-la-imagen.com/foto.jpg"
-      }
-      */
+      console.log("Subiendo archivo:", nuevaFoto);
 
-      /*
-      const updatedUser = await response.json(); 
-      setUser(updatedUser);
-      */
+      const formData = new FormData();
+      formData.append("id", String(user.id)); // Enviar el ID del usuario
+      formData.append("file", nuevaFoto); // Archivo de imagen
 
+      const response = await api.put("/users/", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      console.log("Respuesta del servidor:", response.data);
+      setUser(response.data);
     } catch (error) {
       console.error("Error al actualizar la foto:", error);
     } finally {
       setLoading(false);
     }
   };
-
   return {
     obtenerDatosUsuario,
     actualizarNombre,

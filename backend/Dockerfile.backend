@@ -1,20 +1,24 @@
+# Usa una imagen ligera
 FROM python:3.10-slim
 
 WORKDIR /app
-# Install PostgreSQL client dependencies
-RUN apt-get update && apt-get install -y \
-      libpq-dev gcc && \
-      rm -rf /var/lib/apt/lists/*
 
-# Install psycopg2-binary
-RUN pip install --no-cache-dir psycopg2-binary
+# Instala dependencias necesarias
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libpq-dev gcc libmagic-dev && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt .
-
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
+# Crear directorio de media
+RUN mkdir -p /app/media/profile_pictures
+
+# Expone el puerto 8000
 EXPOSE 8000
 
+# Comando de inicio
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+
