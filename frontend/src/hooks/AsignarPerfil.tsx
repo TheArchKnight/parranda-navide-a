@@ -47,9 +47,6 @@ export const usePerfil = () => {
     setLoading(true);
     try {
       if (!user) return;
-
-      console.log("Subiendo archivo:", nuevaFoto);
-
       const formData = new FormData();
       formData.append("id", user.id); // Enviar el ID del usuario
       formData.append("profile_picture", nuevaFoto); // Nombre del campo debe coincidir con el backend
@@ -60,7 +57,6 @@ export const usePerfil = () => {
         },
       });
 
-      console.log("Respuesta del servidor:", response.data);
       setUser(response.data); // Actualiza el usuario con la nueva URL de la foto
 
     } catch (error) {

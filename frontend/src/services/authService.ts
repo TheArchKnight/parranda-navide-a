@@ -26,14 +26,18 @@ const handleError = (error: any): never => {
 };
 
 export const authService = {
-  login: async (credentials: LoginCredentials, 
+  login: async (
+    credentials: LoginCredentials,
     setLoading: React.Dispatch<React.SetStateAction<boolean>>
   ): Promise<{ user: User; token: string }> => {
     try {
       const response = await api.post("/login/", credentials);
-      const { id, email, name, token } = response.data || {};
-      console.log(response.data);
-      return { user: { id, email, name }, token };
+      const { id, email, name, access_token, url_profile_picture } = response.data || {};
+
+      return {
+        user: { id, email, name, photoUrl: url_profile_picture }, // Map url_profile_picture to photoUrl
+        token: access_token
+      };
     } catch (error) {
       handleError(error);
       return Promise.reject(error);
@@ -41,7 +45,6 @@ export const authService = {
       setLoading(false);
     }
   },
-
   register: async (
     credentials: RegisterCredentials,
     setLoading: React.Dispatch<React.SetStateAction<boolean>>
@@ -51,7 +54,6 @@ export const authService = {
       return authService.login(credentials, setLoading);
     } catch (error: any) {
       handleError(error);
-      console.log(error.response.status);
       return Promise.reject(error);
     } finally {
       setLoading(false);
