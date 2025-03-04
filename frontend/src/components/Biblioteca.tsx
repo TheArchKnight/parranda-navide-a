@@ -6,11 +6,8 @@ const Biblioteca: React.FC = () => {
 
     return (
         <>
-            <div className="h-screen bg-white">
-                <div className="h-[90%] flex">
-                    <Display />
-                </div>
-                <Player />
+            <div className="h-full overflow-y-auto">
+            <Display />
             </div>
         </>
     );
