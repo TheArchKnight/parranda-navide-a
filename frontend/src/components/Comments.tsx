@@ -35,16 +35,14 @@ const Comments: React.FC<CommentsProps> = ({ recipeId }) => {
   const [editedText, setEditedText] = useState<string>("");
   const [editedImage, setEditedImage] = useState<string | undefined>(undefined);
 
-  // Estado local solo para comentarios con imagen
   const [localComments, setLocalComments] = useState<Comment[]>([]); 
 
   useEffect(() => {
     fetchComments(recipeId);
   }, [recipeId]);
 
-  // Función para agregar un comentario con imagen (solo local)
   const handleAddCommentWithImage = () => {
-    if (!newComment.trim() && !image) return; // No permite comentarios vacíos sin imagen
+    if (!newComment.trim() && !image) return; 
 
     const newCommentObj: Comment = {
       id: Date.now(),
@@ -53,41 +51,34 @@ const Comments: React.FC<CommentsProps> = ({ recipeId }) => {
       image,
     };
 
-    // Agregar el comentario con imagen al estado local
     setLocalComments((prev) => [...prev, newCommentObj]);
 
-    // Limpiar los campos de entrada
     setNewComment("");
     setImage(undefined);
     (document.getElementById("file-input") as HTMLInputElement).value = "";
   };
 
-  // Función para crear un comentario sin imagen (usando el hook)
   const handleAddComment = () => {
     if (newComment.trim()) {
       createComment(newComment, user?.id || 0, recipeId);
-      setNewComment(""); // Limpiar campo de texto
+      setNewComment("");
     }
   };
 
-  // Función para eliminar un comentario (con imagen o no)
   const handleDeleteComment = (commentId: number) => {
     setLocalComments((prev) => prev.filter((comment) => comment.id !== commentId));
-    deleteComment(commentId); // Llamada al hook para eliminar desde el servidor
+    deleteComment(commentId); 
   };
 
-  // Función para editar un comentario
   const handleEditComment = (comment: Comment) => {
     setEditingCommentId(comment.id);
     setEditedText(comment.text || "");
     setEditedImage(comment.image);
   };
 
-  // Guardar la edición del comentario
   const handleSaveEdit = () => {
     if (editingCommentId === null) return;
 
-    // Actualizar el comentario en el estado local y servidor
     setLocalComments((prev) =>
       prev.map((comment) =>
         comment.id === editingCommentId
@@ -95,15 +86,13 @@ const Comments: React.FC<CommentsProps> = ({ recipeId }) => {
           : comment
       )
     );
-    updateComment(editingCommentId, username, editedText); // Actualizar en el servidor
+    updateComment(editingCommentId, username, editedText);
 
-    // Limpiar el estado de edición
     setEditingCommentId(null);
     setEditedText("");
     setEditedImage(undefined);
   };
 
-  // Función para manejar el cambio de imagen en un comentario
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
@@ -113,7 +102,6 @@ const Comments: React.FC<CommentsProps> = ({ recipeId }) => {
     }
   };
 
-  // Función para subir la imagen cuando se edita el comentario
   const handleEditImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
@@ -129,7 +117,6 @@ const Comments: React.FC<CommentsProps> = ({ recipeId }) => {
         {loading && <p>Cargando comentarios...</p>}
         {error && <p>Error: {error}</p>}
 
-        {/* Mostrar los comentarios tanto locales como los obtenidos del servidor */}
         {[...comments, ...localComments].map((comment) => (
           <div key={comment.id} className="p-3 bg-white rounded shadow relative">
             {editingCommentId === comment.id ? (
