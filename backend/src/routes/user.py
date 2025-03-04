@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, File, UploadFile, Form
 from src import schemas
 from sqlalchemy.orm import Session
 from src.database import get_db
@@ -38,6 +38,30 @@ def update_user(user_update: schemas.UserUpdate,
                 db: Session = Depends(get_db)):
     try:
         return user_service.update_user(user_update, db)
+    except HTTPException as e:
+        raise e
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+
+@router.put("/users/profile_picture", response_model=schemas.UserResponse)
+async def update_profile_picture(
+    id: str = Form(...),
+    profile_picture: UploadFile = File(...),
+    db: Session = Depends(get_db)
+):
+    try:
+        # Upload the file and get the URL
+        file_data = await user_service.upload_file(id, profile_picture)
+        file_url = file_data["url"]
+
+        # Create a UserUpdate schema with only the updated profile picture URL
+        user_update = schemas.UserUpdate(id=int(id),
+                                         url_profile_picture=file_url)
+
+        # Update the user record
+        return user_service.update_user(user_update, db)
+
     except HTTPException as e:
         raise e
     except Exception as e:
