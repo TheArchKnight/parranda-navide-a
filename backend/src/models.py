@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, ForeignKey, Integer, String
 from src.database import Base
 
 
@@ -11,3 +11,31 @@ class User(Base):
     email = Column(String, unique=True, index=True, nullable=False)
     password = Column(String, nullable=False)
     url_profile_picture = Column(String, nullable=True)
+
+
+class Receta(Base):
+    __tablename__ = "receta"
+
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    nombre = Column(String, nullable=False)
+    ingredientes = Column(String, nullable=False)  # Store as a comma-separated string
+    instrucciones = Column(String, nullable=False)
+    code = Column(String, nullable=False)
+
+
+class CalificacionReceta(Base):
+    __tablename__ = "calificacion_receta"
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    valor = Column(Integer, nullable=False)
+    id_calificador = Column(Integer, ForeignKey("user.id"), nullable=False)
+    id_receta = Column(Integer, ForeignKey("receta.id"), nullable=False)
+
+
+class Comentario(Base):
+    __tablename__ = "comentario"
+
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    comentario = Column(String, nullable=False)
+    id_usuario = Column(Integer, ForeignKey("user.id"), nullable=False)
+    id_receta = Column(Integer, ForeignKey("receta.id"), nullable=False)
+    respuesta_de = Column(Integer, ForeignKey("comentario.id"), nullable=True)

@@ -47,13 +47,13 @@ const Lechona: React.FC = () => {
                 <div className="w-full mt-10">
                     <h2 className="text-2xl font-bold text-center mb-3">⭐ Califica esta receta</h2>
                     <div className="flex justify-center">
-                        <Rating recipeId="lechona" />
+                        <Rating recipeId={3} />
                     </div>
                 </div>
 
                 <div className="w-full max-w-2xl mx-auto mt-10 bg-white p-5 rounded-lg shadow-md">
                     <h2 className="text-2xl font-bold text-center mb-3">💬 Comentarios</h2>
-                    <Comments recipeId="lechona" />
+                    <Comments recipeId={3} />
                 </div>
 
             </div>
