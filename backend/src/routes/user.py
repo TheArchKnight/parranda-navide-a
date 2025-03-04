@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, UploadFile, File
 from src import schemas
 from sqlalchemy.orm import Session
 from src.database import get_db
@@ -30,10 +30,10 @@ def login_user(request: schemas.LoginRequest, db: Session = Depends(get_db)):
 
 
 @router.put("/users/", response_model=schemas.UserResponse)
-def update_user(user_update: schemas.UserUpdate,
+def update_user(user_update: schemas.UserUpdate, file: UploadFile = File(None),
                 db: Session = Depends(get_db)):
     try:
-        return user_service.update_user(user_update, db)
+        return user_service.update_user(user_update, db, file)
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 

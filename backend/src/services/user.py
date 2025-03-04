@@ -1,5 +1,5 @@
 from datetime import timedelta
-from fastapi import Depends, HTTPException
+from fastapi import Depends, HTTPException, UploadFile
 from src import auth, crud, schemas
 from sqlalchemy.orm import Session
 from src.models import User
@@ -18,7 +18,7 @@ class UserService():
 
     def crear_user(self, user: schemas.UserCreate,
                    db: Session = Depends(get_db)):
-        db_user = crud.get_user_by_email(db, user.email)
+        db_user = crud.get_user_by_email(db, user.email, False)
         if db_user:
             raise HTTPException(status_code=400,
                                 detail="User already registered.")
@@ -48,11 +48,14 @@ class UserService():
         return {"message": "Contraseña actualizada correctamente"}
 
     def update_user(self, request: schemas.UserUpdate,
-                    db: Session = Depends(get_db)):
+                    db: Session = Depends(get_db),
+                    file: UploadFile = None):
         user = crud.get_user_by_id(db, request.id)
         update_data = request.dict(exclude_unset=True)
         for key, value in update_data.items():
             setattr(user, key, value)
+        if file:
+            user.url_profile_picture = crud.upload_file(user.id, file)
         db.commit()
         db.refresh(user)
         return user

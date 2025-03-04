@@ -76,8 +76,7 @@ class UserUpdate(BaseModel):
     id: Optional[int] = None
     name: Optional[str] = None
     email: Optional[EmailStr] = None
-    password: Optional[str] = None
-    age: Optional[int] = None
+    url_profile_picture: Optional[str] = None
 
     class Config:
         from_attributes = True  # For ORM compatibility
