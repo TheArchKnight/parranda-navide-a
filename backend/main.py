@@ -6,6 +6,7 @@ from src.routes.user import router as user_router
 from src.routes.comments import router as comments_router
 from src.routes.calificacion_recetas import router as calificacion_recetas_router
 
+from src.initial_data.initial_data import add_initial_data
 from fastapi.staticfiles import StaticFiles
 import os
 import sys
@@ -37,7 +38,7 @@ app.add_middleware(
 
 
 create_db()
-
+add_initial_data()
 app.include_router(user_router, tags=["User"])
 app.include_router(comments_router, tags=["Comments"])
 app.include_router(calificacion_recetas_router, tags=["CalificacionRecetas"])

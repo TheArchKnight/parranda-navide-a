@@ -22,12 +22,14 @@ class Receta(Base):
     instrucciones = Column(String, nullable=False)
     code = Column(String, nullable=False)
 
+
 class CalificacionReceta(Base):
     __tablename__ = "calificacion_receta"
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     valor = Column(Integer, nullable=False)
     id_calificador = Column(Integer, ForeignKey("user.id"), nullable=False)
     id_receta = Column(Integer, ForeignKey("receta.id"), nullable=False)
+
 
 class Comentario(Base):
     __tablename__ = "comentario"
