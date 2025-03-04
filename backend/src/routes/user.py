@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, UploadFile, File
+from fastapi import APIRouter, Depends, HTTPException
 from src import schemas
 from sqlalchemy.orm import Session
 from src.database import get_db
@@ -14,7 +14,9 @@ router = APIRouter()
           Returns the created user details.")
 def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     try:
-        return user_service.crear_user(user, db)
+        return user_service.create_user(user, db)
+    except HTTPException as e:
+        raise e
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
@@ -25,15 +27,19 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
 def login_user(request: schemas.LoginRequest, db: Session = Depends(get_db)):
     try:
         return user_service.login_user(request, db)
+    except HTTPException as e:
+        raise e
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
 
 @router.put("/users/", response_model=schemas.UserResponse)
-def update_user(user_update: schemas.UserUpdate, file: UploadFile = File(None),
+def update_user(user_update: schemas.UserUpdate,
                 db: Session = Depends(get_db)):
     try:
-        return user_service.update_user(user_update, db, file)
+        return user_service.update_user(user_update, db)
+    except HTTPException as e:
+        raise e
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
@@ -43,6 +49,8 @@ def update_password(password_update: schemas.PasswordUpdate,
                     db: Session = Depends(get_db)):
     try:
         return user_service.update_password(password_update, db)
+    except HTTPException as e:
+        raise e
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 

@@ -13,6 +13,8 @@ services:
       - .env  # ✅ Explicitly load .env
     environment:
       - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
+    volumes:
+      - ./media:/app/media  # ✅ Persistencia de imágenes
 
   frontend:
     build:
@@ -42,3 +44,4 @@ services:
 
 volumes:
   postgres_data:
+  media:  # ✅ Volumen persistente para imágenes

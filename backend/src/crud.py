@@ -8,11 +8,11 @@ import shutil
 
 
 def _user_not_found(user, should_raise=True):
-    if not should_raise:
-        return 0
-    if not user:
+    if not user and should_raise:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail="User not found")
+    if not user and not should_raise:
+        return False
     return user
 
 

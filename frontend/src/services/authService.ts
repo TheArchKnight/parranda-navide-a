@@ -8,27 +8,53 @@ const MOCK_USERS: User[] = [{
   name: "Test User"
 }];
 
-export const authService = {
-  login: async (credentials: LoginCredentials): Promise<{ user: User; token: string }> => {
-    const response = await api.post("/login/", credentials);
-    if(response.status === 400){
+const handleError = (error: any): never => {
+  if (error.response) {
+    const { status } = error.response;
+    if (status === 400) {
+      alert("Contraseña incorrecta.");
       throw new Error("Wrong credentials.");
+    } else if (status === 404) {
+      alert("Usuario no encontrado.");
+      throw new Error("User not found.");
+    } else if (status === 409) {
+      alert("El usuario ya existe.");
+      throw new Error("User already exists.");
     }
-    console.log(response.data)
-    const user: User = {
-      id: response.data?.id,
-      email: response.data?.email,
-      name: response.data?.name
+  }
+  throw new Error("An unexpected error occurred.");
+};
+
+export const authService = {
+  login: async (credentials: LoginCredentials, 
+    setLoading: React.Dispatch<React.SetStateAction<boolean>>
+  ): Promise<{ user: User; token: string }> => {
+    try {
+      const response = await api.post("/login/", credentials);
+      const { id, email, name, token } = response.data || {};
+      return { user: { id, email, name }, token };
+    } catch (error) {
+      handleError(error);
+      return Promise.reject(error);
+    } finally {
+      setLoading(false);
     }
-    return { user, token: response.data?.token };
   },
 
-  register: async (credentials: RegisterCredentials): Promise<{ user: User; token: string }> => {
-    const responseRegister = await api.post("/register/", credentials);
-    if(responseRegister.status === 400){
-      throw new Error("User already exists");
-    }    
-    return authService.login(credentials);
+  register: async (
+    credentials: RegisterCredentials,
+    setLoading: React.Dispatch<React.SetStateAction<boolean>>
+  ): Promise<{ user: User; token: string }> => {
+    try {
+      await api.post("/register/", credentials);
+      return authService.login(credentials, setLoading);
+    } catch (error: any) {
+      handleError(error);
+      console.log(error.response.status);
+      return Promise.reject(error);
+    } finally {
+      setLoading(false);
+    }
   },
 
   verifyToken: (token: string): User | null => {

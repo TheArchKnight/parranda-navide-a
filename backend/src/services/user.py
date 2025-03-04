@@ -1,34 +1,28 @@
 from datetime import timedelta
-from fastapi import Depends, HTTPException, UploadFile
+from fastapi import Depends, HTTPException
 from src import auth, crud, schemas
 from sqlalchemy.orm import Session
-from src.models import User
 from src.database import get_db
 from src.auth import hash_password
-
-
-def _verify_password_http(old_password: str, user: User):
-    if not user or not auth.verify_password(old_password, user.password):
-        raise HTTPException(status_code=400, detail="Wrong credentials")
 
 
 class UserService():
     def __init__(self):
         pass
 
-    def crear_user(self, user: schemas.UserCreate,
-                   db: Session = Depends(get_db)):
+    def create_user(self, user: schemas.UserCreate,
+                    db: Session = Depends(get_db)):
         db_user = crud.get_user_by_email(db, user.email, False)
         if db_user:
-            raise HTTPException(status_code=400,
+            raise HTTPException(status_code=409,
                                 detail="User already registered.")
         return crud.create_user(db, user)
 
     def login_user(self, request: schemas.LoginRequest,
                    db: Session = Depends(get_db)):
         user = crud.get_user_by_email(db, request.email)
-        _verify_password_http(request.password, user)
-
+        if not auth.verify_password(request.password, user.password):
+            raise HTTPException(status_code=400, detail="Wrong credentials")
         access_token = auth.create_access_token(
             data={"sub": user.email},
             expires_delta=timedelta(minutes=auth.ACCESS_TOKEN_EXPIRE_MINUTES))
@@ -48,14 +42,11 @@ class UserService():
         return {"message": "Contraseña actualizada correctamente"}
 
     def update_user(self, request: schemas.UserUpdate,
-                    db: Session = Depends(get_db),
-                    file: UploadFile = None):
+                    db: Session = Depends(get_db)):
         user = crud.get_user_by_id(db, request.id)
         update_data = request.dict(exclude_unset=True)
         for key, value in update_data.items():
             setattr(user, key, value)
-        if file:
-            user.url_profile_picture = crud.upload_file(user.id, file)
         db.commit()
         db.refresh(user)
         return user

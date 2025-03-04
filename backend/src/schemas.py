@@ -73,7 +73,7 @@ class TokenResponse(UserResponse):
 
 
 class UserUpdate(BaseModel):
-    id: Optional[int] = None
+    id: int
     name: Optional[str] = None
     email: Optional[EmailStr] = None
     url_profile_picture: Optional[str] = None

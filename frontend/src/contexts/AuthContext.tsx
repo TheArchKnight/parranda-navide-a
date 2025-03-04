@@ -21,7 +21,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const token = localStorage.getItem('token');
     if (token) {
       const user = authService.verifyToken(token);
-      //setUser(user);
+      setUser(user);
     }
     setLoading(false);
   }, []);
@@ -29,7 +29,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const login = async (email: string, password: string) => {
     setLoading(true);
     console.log(email, password);
-    const { user, token } = await authService.login({ email, password });
+    const { user, token } = await authService.login({ email, password }, setLoading);
     localStorage.setItem('token', token);
     setUser(user);
     setLoading(false);
@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const register = async (name: string, email: string, password: string) => {
     setLoading(true);
-    const { user, token } = await authService.register({ name, email, password });
+    const { user, token } = await authService.register({ name, email, password }, setLoading);
     localStorage.setItem('token', token);
     setUser(user);
     setLoading(false);
