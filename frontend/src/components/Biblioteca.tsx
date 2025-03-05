@@ -1,16 +1,14 @@
-import Player from "../components/music/Player";
 import Display from "../components/music/Display";
 import * as React from "react";
+import Snowfall from "./Snowfall";
 
 const Biblioteca: React.FC = () => {
 
     return (
         <>
-            <div className="h-screen bg-white">
-                <div className="h-[90%] flex">
-                    <Display />
-                </div>
-                <Player />
+            <div className="h-full overflow-y-auto">
+                <Snowfall />
+                <Display />
             </div>
         </>
     );

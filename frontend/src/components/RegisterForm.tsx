@@ -21,8 +21,8 @@ const RegisterForm = ({
 }: RegisterFormProps) => {
   const [showPassword, setShowPassword] = React.useState(false);
   return (
-    <div className="inset-0 w-full p-8">
-      <h2 className="text-2xl font-bold mb-6">Registrar usuario</h2>
+    <div className="inset-0 w-full">
+      <h2 className="text-2xl font-bold mb-6 text-center">Registrar usuario</h2>
       <form onSubmit={onSubmit} className="space-y-4">
         <Input
           type="text"

@@ -18,7 +18,6 @@ def get_comments(db: Session = Depends(get_db)):
         return comments_service.get_comments(db)
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
-    
 
 
 @router.post("/comments/", summary="Create a comment",
@@ -29,7 +28,7 @@ def create_comment(comment_data: Comentario, db: Session = Depends(get_db)):
         return comments_service.create_comment(db, comment_data)
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
-    
+
 
 @router.get("/comments/{code}", response_model=list[CommentResponse],
             summary="Get comments by recipe",
@@ -39,18 +38,19 @@ def get_comments_by_recipe(code: int, db: Session = Depends(get_db)):
     try:
         return comments_service.get_comments_by_recipe(db, code)
     except Exception as e:
-        raise HTTPException(status_code=400, detail = str(e))
-    
+        raise HTTPException(status_code=400, detail=str(e))
+
 
 @router.put("/comments/", summary="Update a comment",
             description="Updates a comment in the database.")
-def update_comment(comment_data: CommentResponse, db: Session = Depends(get_db)):
+def update_comment(comment_data: CommentResponse,
+                   db: Session = Depends(get_db)):
     comments_service = CommentsService()
     try:
         return comments_service.update_comment(db, comment_data)
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
-    
+
 
 @router.delete("/comments/{comment_id}", summary="Delete a comment",
                description="Deletes a comment from the database.")

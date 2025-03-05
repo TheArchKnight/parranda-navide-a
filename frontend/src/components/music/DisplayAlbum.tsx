@@ -28,40 +28,56 @@ const DisplayAlbum = () => {
         <>
             <NavBar />
             <div className="mt-10 flex gap-8 flex-col md:flex-row md:items-end">
-                <img className="w-[300px] h-[300px] object-cover rounded-xl" src={album?.image} alt="" />
-                <div className="flex flex-col">
-                    <p>PlayList</p>
-                    <h2 className="text-5xl font-bold mb-10 md:text-7xl">{album?.nombre}</h2>
-                    <h4 className="text-2xl font-semibold mb-10 md:text-3xl">{album?.desc}</h4>
-                    <p className="text-2xl font-semibold md:text-2xl">{canciones.length} canciones</p>
+                <img className="w-[300px] h-[300px] ml-2 object-cover rounded-xl" src={album?.image} alt="" />
+                <div className="flex flex-col max-w-[300px] ">
+                    <p className="text-sm md:text-base">Playlist</p>
+                    <h2 className="text-4xl font-bold mb-6 md:text-5xl">{album?.nombre}</h2>
+                    <h4 className="text-lg md:text-xl font-semibold mb-6">{album?.desc}</h4>
+                    <p className="text-lg md:text-xl font-semibold">{canciones.length} canciones</p>
                 </div>
             </div>
-            <div className="grid grid-cols-4 sm:grid-cols-4 mt-5 mb-4 pl-2 text-[#a7a7a7]">
+            <hr className="p-2 "/>
+
+            <div className="hidden lg:grid grid-cols-4 sm:grid-cols-4 mb-2 text-[#706c6c]">
                 <p>
-                    <b className="text-right mr-2 ml-4"> # </b>
+                    <b className="text-center mr-4 ml-2"> # </b>
                     Título
                 </p>
                 <p>Artista</p>
                 <p>Género</p>
                 <p>Duración</p>
             </div>
-            <hr />
+            
             {canciones.map((item, index) => (
-                <div
-                    onClick={() => playWithId(item.id_cancion,item.genero, albumId )} 
-                    key={index}
-                    className="grid grid-cols-4 sm:grid-cols-4 gap-2 p-2 items-center text-[#a7a7a7] hover:bg-[#1107072b] cursor-pointer"
-                >
-                    <div className="flex items-center min-w-[50px]">
-                        <b className="w-6 text-right mr-4 text-[#a7a7a7]">{index + 1}</b>
-                        <img className="w-10 h-10 mr-5 rounded-md" src={item.image} alt="" />
-                        <p className="text-[#a7a7a7]">{item.nombre}</p>
+            <div
+                onClick={() => playWithId(item.id_cancion, item.genero, albumId)} 
+                key={index}
+                className="flex flex-col lg:grid lg:grid-cols-4 gap-2 p-2 items-center text-[#474242] lg:hover:bg-[#1107072b] cursor-pointer rounded-md last:mb-5"
+            >
+                {/* 📌 Versión móvil y tablet: Imagen + Nombre + Artista debajo */}
+                <div className="flex items-center w-full lg:hidden">
+                    <img className="w-12 h-12 mr-4 rounded-md" src={item.image} alt={item.nombre} />
+                    <div className="flex flex-col">
+                        <p className="text-base">{item.nombre}</p>
+                        <p className="text-sm text-[#706c6c]">{item.artista}</p>
                     </div>
-                    <p>{item.artista}</p>
-                    <p>{item.genero}</p>
-                    <p className="text-[15px]">{item.duration}</p>
                 </div>
-            ))}
+
+                {/* 📌 Versión escritorio: Índice + Imagen + Nombre */}
+                <div className="hidden lg:flex items-center">
+                    <b className="w-6 text-center mr-2">{index + 1}</b>
+                    <img className="w-10 h-10 mr-4 rounded-md" src={item.image} alt={item.nombre} />
+                    <p>{item.nombre}</p>
+                </div>
+
+                {/* 📌 Resto de columnas en escritorio */}
+                <p className="hidden lg:block">{item.artista}</p>
+                <p className="hidden lg:block">{item.genero}</p>
+                <p className="hidden lg:block">{item.duration}</p>
+            </div>
+        ))}
+
+
         </>
     );
 };

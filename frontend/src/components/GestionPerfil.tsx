@@ -12,7 +12,6 @@ const GestionPerfil: React.FC = () => {
   const { obtenerDatosUsuario, actualizarNombre, actualizarPassword, actualizarFoto, loading } = usePerfil();
   const user = obtenerDatosUsuario();
 
-  // Estados locales para la edición
   const [name, setName] = React.useState(user?.name || "");
   const [password, setPassword] = React.useState("");
   const [confirmPassword, setConfirmPassword] = React.useState("");
@@ -24,12 +23,9 @@ const GestionPerfil: React.FC = () => {
   const [isSecurityCodeSent, setIsSecurityCodeSent] = React.useState(false);
   const [isSecurityCodeButtonDisabled, setIsSecurityCodeButtonDisabled] = React.useState(false);
 
-  // Estado para la foto de perfil
   const [photoUrl, setPhotoUrl] = React.useState<string | null>(user?.photoUrl || null);
 
-  const generateSecurityCode = () => {
-    return Math.floor(100000 + Math.random() * 900000).toString();
-  };
+  const generateSecurityCode = () => Math.floor(100000 + Math.random() * 900000).toString();
 
   const handleSaveName = async () => {
     await actualizarNombre(name);
@@ -41,7 +37,7 @@ const GestionPerfil: React.FC = () => {
     setGeneratedCode(newCode);
     setIsSecurityCodeSent(true);
     setIsSecurityCodeButtonDisabled(true);
-    console.log(`Código de seguridad enviado al correo de: ${user?.email} - Código: ${newCode}`);
+    console.log(`Código enviado a: ${user?.email} - Código: ${newCode}`);
 
     setTimeout(() => {
       setIsSecurityCodeButtonDisabled(false);
@@ -81,99 +77,104 @@ const GestionPerfil: React.FC = () => {
     securityCode === generatedCode;
 
   return (
-    <> 
-      <div className="flex flex-col items-center min-h-screen bg-gray-100 p-6">
-        <div className="flex items-center gap-2 font-semibold ml-auto">
-          <h2 className="bg-red-500 text-white text-[25px] m-2 px-10 py-1 rounded-full">
-            Perfil
+    <>
+      <div className="flex flex-col items-center min-h-screen bg-gray-100 p-4 md:p-6 overflow-y-auto">
+        {/* Título */}
+        <div className="w-full flex justify-end">
+          <h2 className="bg-red-500 text-white text-xl md:text-2xl lg:text-3xl px-6 py-2 rounded-full mb-4">
+              Perfil
           </h2>
-        </div>
-        {/* Sección principal */}
-        <div className="flex flex-col md:flex-row w-full max-w-4xl bg-white rounded-lg shadow-lg overflow-hidden">
-          {/* Sección de datos */}
-          <div className="w-full md:w-2/3 p-6 bg-gray-50">
-            {/* Sección para cambiar nombre */}
-            <div className="bg-white p-4 rounded-lg shadow-md mb-4">
-                {!isEditingName ? (
-                  <>
-                    <p className="text-lg font-medium text-gray-800">Nombre: {name}</p>
-                    <Button className="mt-2 w-full" onClick={() => setIsEditingName(true)}>
-                      Cambiar Nombre
-                    </Button>
-                  </>
-                ) : (
-                  <>
-                    <Input label="Nuevo Nombre" type="text" value={name} onChange={(e) => setName(e.target.value)} />
-                    <Button className="mt-2 w-full" onClick={handleSaveName} disabled={loading}>
-                      {loading ? "Guardando..." : "Guardar Nombre"}
-                    </Button>
-                  </>
-                )}
-            </div>
+      </div>
 
-            {/* Sección para cambiar contraseña */}
-            <div className="bg-white p-4 rounded-lg shadow-md">
-                {!isEditingPassword ? (
-                  <>
-                    <p className="text-lg font-medium text-gray-800">Contraseña: ********</p>
-                    <Button className="mt-2 w-full" onClick={() => setIsEditingPassword(true)}>
-                      Cambiar Contraseña
-                    </Button>
-                  </>
-                ) : (
-                  <>
-                    <PasswordInput
-                      label="Nueva Contraseña"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                    />
-                    <PasswordStrengthChecker password={password} />
-
-                    <PasswordInput
-                      label="Confirmar Nueva Contraseña"
-                      value={confirmPassword}
-                      onChange={(e) => setConfirmPassword(e.target.value)}
-                    />
-                    <ConfirmPasswordChecker password={password} confirmPassword={confirmPassword} />
-
-                    <Button
-                      className="mt-2 w-full"
-                      onClick={handleSendSecurityCode}
-                      disabled={isSecurityCodeButtonDisabled || loading}
-                    >
-                      {isSecurityCodeButtonDisabled ? "Espera 5 minutos" : "Enviar Código de Seguridad"}
-                    </Button>
-
-                    {isSecurityCodeSent && (
-                      <Input
-                        label="Código de Seguridad"
-                        type="text"
-                        value={securityCode}
-                        onChange={(e) => setSecurityCode(e.target.value)}
-                      />
-                    )}
-
-                    <Button
-                      className="mt-2 w-full"
-                      onClick={handleSavePassword}
-                      disabled={!isSavePasswordButtonEnabled || loading}
-                    >
-                      {loading ? "Guardando..." : "Guardar Contraseña"}
-                    </Button>
-                  </>
-                )}
-            </div>
-          </div>  
-          {/* Sección de foto de perfil */}
-          <div className="w-full md:w-1/3 flex flex-col justify-center items-center bg-red-500 p-6 min-h-full">
-            <div className="w-24 h-24 rounded-full border-4 border-white shadow-md overflow-hidden">
+        {/* Contenedor Principal */}
+        <div className="flex flex-col md:flex-row w-full max-w-5xl bg-white rounded-lg shadow-lg overflow-y overflow-hidden">
+          
+          {/* Foto de perfil - En móviles arriba, en desktop a la izquierda */}
+          <div className="w-full md:w-1/3 flex flex-col justify-center items-center bg-red-500 p-6">
+            <div className="w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-white shadow-md overflow-hidden">
               <img
                 src={photoUrl || defaultPhoto} 
-                alt=""
+                alt="Foto de perfil"
                 className="w-full h-full object-cover"
               />
             </div>
             <UploadPhoto onPhotoChange={handlePhotoChange} actualizarFoto={actualizarFoto} />
+          </div>
+
+          {/* Datos del Usuario */}
+          <div className="w-full md:w-2/3 p-6 bg-gray-50">
+            
+            {/* Cambiar Nombre */}
+            <div className="bg-white p-4 rounded-lg shadow-md mb-4">
+              {!isEditingName ? (
+                <>
+                  <p className="text-lg font-medium text-gray-800">Nombre: {name}</p>
+                  <Button className="mt-2 w-full md:w-auto" onClick={() => setIsEditingName(true)}>
+                    Cambiar Nombre
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Input label="Nuevo Nombre" type="text" value={name} onChange={(e) => setName(e.target.value)} />
+                  <Button className="mt-2 w-full md:w-auto" onClick={handleSaveName} disabled={loading}>
+                    {loading ? "Guardando..." : "Guardar Nombre"}
+                  </Button>
+                </>
+              )}
+            </div>
+
+            {/* Cambiar Contraseña */}
+            <div className="bg-white p-4 rounded-lg shadow-md">
+              {!isEditingPassword ? (
+                <>
+                  <p className="text-lg font-medium text-gray-800">Contraseña: ********</p>
+                  <Button className="mt-2 w-full md:w-auto" onClick={() => setIsEditingPassword(true)}>
+                    Cambiar Contraseña
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <PasswordInput
+                    label="Nueva Contraseña"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                  <PasswordStrengthChecker password={password} />
+
+                  <PasswordInput
+                    label="Confirmar Nueva Contraseña"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                  />
+                  <ConfirmPasswordChecker password={password} confirmPassword={confirmPassword} />
+
+                  <Button
+                    className="mt-2 w-full md:w-auto"
+                    onClick={handleSendSecurityCode}
+                    disabled={isSecurityCodeButtonDisabled || loading}
+                  >
+                    {isSecurityCodeButtonDisabled ? "Espera 5 minutos" : "Enviar Código de Seguridad"}
+                  </Button>
+
+                  {isSecurityCodeSent && (
+                    <Input
+                      label="Código de Seguridad"
+                      type="text"
+                      value={securityCode}
+                      onChange={(e) => setSecurityCode(e.target.value)}
+                    />
+                  )}
+
+                  <Button
+                    className="mt-2 w-full md:w-auto"
+                    onClick={handleSavePassword}
+                    disabled={!isSavePasswordButtonEnabled || loading}
+                  >
+                    {loading ? "Guardando..." : "Guardar Contraseña"}
+                  </Button>
+                </>
+              )}
+            </div>
           </div>
         </div>
       </div>

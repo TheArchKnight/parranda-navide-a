@@ -24,7 +24,7 @@ const Rituales: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col w-full h-full min-h-screen bg-white">
+    <div className="flex flex-col w-full h-full overflow-y-auto ">
       <nav className="bg-red-600 text-white p-4 flex justify-center gap-4 shadow-lg w-full">
         {subItems.map((item) => (
           <button
@@ -41,7 +41,7 @@ const Rituales: React.FC = () => {
         ))}
       </nav>
 
-      <main className="flex-1 w-full h-screen overflow-auto bg-red-50 p-6">
+      <main className="flex-1 w-full h-screen overflow-auto bg-red-50">
         <div className="max-w-4xl mx-auto">{currentComponent}</div>
       </main>
     </div>

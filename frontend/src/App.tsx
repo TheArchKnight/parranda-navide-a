@@ -6,6 +6,7 @@ import AuthForm from './components/AuthForm'
 import  ProtectedRoute  from './components/ProtectedRoute'
 import { useContext } from "react";
 import { PlayerContext } from "./contexts/PlayerContextProvider";
+import Player from './components/music/Player'
 
 function App() {
   const context = useContext(PlayerContext);
@@ -24,8 +25,13 @@ function App() {
               <Route path="/login" element={<AuthForm />} />
               <Route path="*" element={
                 <ProtectedRoute>
-                    <Home />
-                    <audio ref={audioRef} src={track.file} preload="auto"></audio>
+                  <div className="h-screen bg-white">
+                    <div className="h-[90%] flex">
+                      <Home />
+                      <audio ref={audioRef} src={track.file} preload="auto"></audio>
+                    </div>
+                    <Player />
+                </div>
                 </ProtectedRoute>
               } />
             </Routes>

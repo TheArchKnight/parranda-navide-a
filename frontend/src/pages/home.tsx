@@ -29,7 +29,7 @@ const Home: React.FC = () => {
         {
             name: 'Musica Navideña',
             component:
-                    <Biblioteca></Biblioteca>
+                    <Biblioteca/>
         },
     ];
 

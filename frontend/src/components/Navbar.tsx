@@ -32,7 +32,7 @@ const Navbar: React.FC<NavbarProps> = ({
   };
 
   return (
-    <div className="flex h-screen w-full">
+    <div className="flex h-full w-full">
       <nav className={`flex flex-col h-full bg-red-500 text-white transition-all duration-300 relative ${
         isExpanded ? 'w-64' : 'w-20'
       }`}>
