@@ -39,7 +39,6 @@ class Comentario(Base):
     id_usuario = Column(Integer, ForeignKey("user.id"), nullable=False)
     id_receta = Column(Integer, ForeignKey("receta.id"), nullable=False)
     respuesta_de = Column(Integer, ForeignKey("comentario.id"), nullable=True)
-<<<<<<< HEAD
     url_foto = Column(String, nullable=True)
 
 
@@ -51,5 +50,3 @@ class Foto(Base):
     id_usuario = Column(Integer, ForeignKey("user.id"), nullable=False)
     id_comentario = Column(Integer, ForeignKey("comentario.id"), nullable=True)
 
-=======
->>>>>>> dev

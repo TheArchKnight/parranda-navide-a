@@ -29,8 +29,8 @@ services:
       - /app/node_modules 
     environment:
       - VITE_BACKEND_URL=http://localhost:8000  # ✅ React (Vite) uses VITE_ prefix
-      - VITE_CLOUDINARY_CLOUD_NAME: ${VITE_CLOUDINARY_CLOUD_NAME}
-      - VITE_CLOUDINARY_UPLOAD_PRESET: ${VITE_CLOUDINARY_UPLOAD_PRESET}
+      - VITE_CLOUDINARY_CLOUD_NAME=${VITE_CLOUDINARY_CLOUD_NAME}
+      - VITE_CLOUDINARY_UPLOAD_PRESET=${VITE_CLOUDINARY_UPLOAD_PRESET}
 
   db:
     image: postgres:15

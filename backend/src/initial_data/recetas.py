@@ -47,6 +47,13 @@ initial_recetas = [
 def add_recetas(session):
     receta_repo = RecetaRepository()
     for receta in initial_recetas:
-        search = receta_repo.get_recipes_by_code(session, receta.code)
+        search = receta_repo.get(session, receta.id)
+        
         if not search:
             session.add(receta)
+        else:
+            print(f"Receta {receta.nombre} already exists in the database.")
+    session.commit()
+    print("Initial recetas added successfully.")
+    return
+    

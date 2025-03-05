@@ -28,8 +28,13 @@ services:
     volumes:
       - ./frontend:/app  # Montar el código del frontend para desarrollo
       - /app/node_modules  # Volumen para evitar sobreescribir node_modules
+    env_file:
+      - .env  # Cargar explícitamente el archivo .env
     environment:
       - VITE_BACKEND_URL=http://localhost:8000  # URL del backend para React (Vite usa VITE_ prefix)
+      - VITE_CLOUDINARY_CLOUD_NAME=${VITE_CLOUDINARY_CLOUD_NAME}
+      - VITE_CLOUDINARY_UPLOAD_PRESET=${VITE_CLOUDINARY_UPLOAD_PRESET}
+
     restart: always  # Reiniciar siempre el contenedor si se detiene
 
   db:
