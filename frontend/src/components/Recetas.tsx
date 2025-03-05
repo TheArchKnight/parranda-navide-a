@@ -24,25 +24,25 @@ const Rituales: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col w-full h-full min-h-screen bg-white">
+    <div className="flex flex-col w-full h-[calc(100vh-80px)] bg-white">
       <nav className="bg-red-600 text-white p-4 flex justify-center gap-4 shadow-lg w-full">
-        {subItems.map((item) => (
-          <button
-            key={item.name}
-            onClick={() => handleNavigation(item.name, item.component)}
-            className={`px-4 py-2 rounded-full font-semibold transition-all
-              ${selectedName === item.name 
-                ? "bg-orange-500 text-white shadow-md scale-105"
-                : "bg-white text-red-700 hover:bg-red-700 hover:text-white"
-              }`}
-          >
-            {item.name}
-          </button>
-        ))}
+      {subItems.map((item) => (
+        <button
+        key={item.name}
+        onClick={() => handleNavigation(item.name, item.component)}
+        className={`px-4 py-2 rounded-full font-semibold transition-all
+          ${selectedName === item.name 
+          ? "bg-orange-500 text-white shadow-md scale-105"
+          : "bg-white text-red-700 hover:bg-red-700 hover:text-white"
+          }`}
+        >
+        {item.name}
+        </button>
+      ))}
       </nav>
 
       <main className="flex flex-1 w-full h-full overflow-y-auto">
-        <div className="w-full h-full">{currentComponent}</div>
+      <div className="w-full h-full">{currentComponent}</div>
       </main>
     </div>
   );
