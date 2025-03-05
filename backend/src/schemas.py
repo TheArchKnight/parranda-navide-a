@@ -82,6 +82,12 @@ class UserUpdate(BaseModel):
         from_attributes = True  # For ORM compatibility
 
 
+class Mail(BaseModel):
+    recepient: EmailStr
+    subject: str
+    message: str
+
+
 class PasswordUpdate(BaseModel):
     new_password: str = Field(..., min_length=6)
     id: int
