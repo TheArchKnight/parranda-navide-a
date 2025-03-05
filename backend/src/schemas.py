@@ -83,7 +83,7 @@ class UserUpdate(BaseModel):
 
 
 class Mail(BaseModel):
-    recepient: EmailStr
+    recipient: EmailStr
     subject: str
     message: str
 

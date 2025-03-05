@@ -94,7 +94,6 @@ class UserService():
                 body=message,
                 subtype=MessageType.html
             )
-
             fm = FastMail(self.mail_conf)
             await fm.send_message(message_schema)
 

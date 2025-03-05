@@ -88,9 +88,9 @@ def verify_token(request: schemas.TokenResponse,
 @router.post("/users/send_mail")
 async def send_mail(request: schemas.Mail, db: Session = Depends(get_db)):
     try:
-        user = crud.get_user_by_email(db, request.recepient, False)
+        user = crud.get_user_by_email(db, request.recipient, False)
         if user:
-            return await user_service.send_mail(request.recepient,
+            return await user_service.send_mail(request.recipient,
                                                 request.subject,
                                                 request.message)
         raise HTTPException(status_code=409, detail="User already registered.")

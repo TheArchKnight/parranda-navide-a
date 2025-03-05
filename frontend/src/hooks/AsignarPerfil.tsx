@@ -17,7 +17,6 @@ export const usePerfil = () => {
         id: user.id,
         name: nuevoNombre,
       });
-
       setUser(response.data);
     } catch (error) {
       console.error("Error al actualizar el nombre:", error);
@@ -50,15 +49,14 @@ export const usePerfil = () => {
       const formData = new FormData();
       formData.append("id", user.id); // Enviar el ID del usuario
       formData.append("profile_picture", nuevaFoto); // Nombre del campo debe coincidir con el backend
-
       const response = await api.put("/users/profile_picture", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-
-      setUser(response.data); // Actualiza el usuario con la nueva URL de la foto
-
+      setUser((prevUser) =>
+        prevUser ? { ...prevUser, photoUrl: response.data.url_profile_picture } : prevUser
+      );
     } catch (error) {
       console.error("Error al actualizar la foto:", error);
     } finally {

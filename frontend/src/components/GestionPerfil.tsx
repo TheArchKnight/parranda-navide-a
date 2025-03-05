@@ -7,6 +7,7 @@ import ConfirmPasswordChecker from "../components/formComponents/ConfirmPassword
 import PasswordInput from "../components/formComponents/PasswordInput";
 import UploadPhoto from "./formComponents/UploadPhoto";
 import defaultPhoto from "../assets/images/profile-picture.png";
+import api from "../services/api";
 
 const GestionPerfil: React.FC = () => {
   const { obtenerDatosUsuario, actualizarNombre, actualizarPassword, actualizarFoto, loading } = usePerfil();
@@ -37,8 +38,11 @@ const GestionPerfil: React.FC = () => {
     setGeneratedCode(newCode);
     setIsSecurityCodeSent(true);
     setIsSecurityCodeButtonDisabled(true);
-    console.log(`Código enviado a: ${user?.email} - Código: ${newCode}`);
-
+    api.post("/users/send_mail", {
+      recipient: user?.email,
+      subject: "Codigo de confirmacion",
+      message: `Codigo de confirmacion para cambio de contraseña: ${newCode}`
+    })
     setTimeout(() => {
       setIsSecurityCodeButtonDisabled(false);
     }, 300000);
@@ -64,7 +68,7 @@ const GestionPerfil: React.FC = () => {
 
   const handlePhotoChange = async (file: File | null) => {
     if (file) {
-      await actualizarFoto(file); 
+      //await actualizarFoto(file); 
       setPhotoUrl(user?.photoUrl || null);
     }
   };
@@ -158,7 +162,7 @@ const GestionPerfil: React.FC = () => {
 
                   {isSecurityCodeSent && (
                     <Input
-                      label="Código de Seguridad"
+                      label="Código de Seguridad enviado al correo electronico."
                       type="text"
                       value={securityCode}
                       onChange={(e) => setSecurityCode(e.target.value)}

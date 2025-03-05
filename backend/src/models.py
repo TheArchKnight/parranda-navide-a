@@ -49,4 +49,3 @@ class Foto(Base):
     id_receta = Column(Integer, ForeignKey("receta.id"), nullable=True)
     id_usuario = Column(Integer, ForeignKey("user.id"), nullable=False)
     id_comentario = Column(Integer, ForeignKey("comentario.id"), nullable=True)
-
