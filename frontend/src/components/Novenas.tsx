@@ -1,4 +1,6 @@
 import React, { JSX, useState } from "react";
+import { Menu } from "lucide-react";
+
 import OracionDiaria from "./novenaComponents/OracionDiaria";
 import OracionMaria from "./novenaComponents/OracionMaria";
 import OracionJose from "./novenaComponents/OracionJose";
@@ -59,9 +61,13 @@ const Novenas: React.FC = () => {
   const [currentComponent, setCurrentComponent] = useState<JSX.Element>(items[0].component!);
   const [isConsideracionesActive, setIsConsideracionesActive] = useState(false);
   const [isVillancicosActive, setIsVillancicosActive] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
 
   const handleNavigation = (name: string, component?: JSX.Element) => {
     setSelectedName(name);
+    setIsMenuOpen(false);
+    setIsSubMenuOpen(false);
 
     if (component) {
       setCurrentComponent(component);
@@ -82,70 +88,68 @@ const Novenas: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col w-full h-full min-h-screen bg-green-50">
+    <div className="flex flex-col w-full h-full overflow-y-auto">
+      {/* Menú Principal */}
       {!isConsideracionesActive && !isVillancicosActive ? (
-        <nav className="bg-red-700 text-white p-4 flex flex-wrap justify-center gap-2 shadow-lg w-full">
-          {items.map((item) => (
-            <button
-              key={item.name}
-              onClick={() => handleNavigation(item.name, item.component)}
-              className={`px-4 py-2 rounded-lg font-semibold transition-all border-2 border-yellow-500
-                ${selectedName === item.name 
-                  ? "bg-yellow-500 text-red-800 shadow-md scale-105"
-                  : "bg-white text-red-700 hover:bg-green-600 hover:text-white"
-                }`}
-            >
-              {item.name}
+        <>
+          <div className="md:hidden bg-red-700 text-white p-4 flex justify-between items-center shadow-lg">
+            <span className="font-bold">Novena</span>
+            <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-white text-2xl">
+              <Menu />
             </button>
-          ))}
-        </nav>
-      ) : isConsideracionesActive ? (
-        <nav className="bg-blue-700 text-white p-4 flex flex-wrap justify-center gap-2 shadow-lg w-full">
-          {consideracionesItems.map((item) => (
-            <button
-              key={item.name}
-              onClick={() => handleNavigation(item.name, item.component)}
-              className={`px-4 py-2 rounded-lg font-semibold transition-all border-2 border-white
-                ${selectedName === item.name 
-                  ? "bg-yellow-400 text-blue-900 shadow-md scale-105"
-                  : "bg-white text-blue-700 hover:bg-blue-500 hover:text-white"
-                }`}
-            >
-              {item.name}
-            </button>
-          ))}
-          <button
-            onClick={() => handleNavigation("Volver a la Novena")}
-            className="px-4 py-2 rounded-lg font-semibold bg-red-500 text-white hover:bg-red-700 transition-all"
+          </div>
+
+          <nav
+            className={`${
+              isMenuOpen ? "flex" : "hidden"
+            } md:flex flex-wrap justify-center gap-2 bg-red-700 text-white p-4 shadow-lg w-full`}
           >
-            Volver a la Novena
-          </button>
-        </nav>
+            {items.map((item) => (
+              <button
+                key={item.name}
+                onClick={() => handleNavigation(item.name, item.component)}
+                className="px-4 py-2 rounded-lg font-semibold transition-all border-2 border-yellow-500 bg-white text-red-700 hover:bg-green-600 hover:text-white"
+              >
+                {item.name}
+              </button>
+            ))}
+          </nav>
+        </>
       ) : (
-        <nav className="bg-purple-700 text-white p-4 flex flex-wrap justify-center gap-2 shadow-lg w-full">
-          {villancicosItems.map((item) => (
-            <button
-              key={item.name}
-              onClick={() => handleNavigation(item.name, item.component)}
-              className={`px-4 py-2 rounded-lg font-semibold transition-all border-2 border-white
-                ${selectedName === item.name 
-                  ? "bg-yellow-400 text-purple-900 shadow-md scale-105"
-                  : "bg-white text-purple-700 hover:bg-purple-500 hover:text-white"
-                }`}
-            >
-              {item.name}
+        <>
+          {/* Menú Secundario para Consideraciones y Villancicos */}
+          <div className="md:hidden bg-blue-700 text-white p-4 flex justify-between items-center shadow-lg">
+            <span className="font-bold">{isConsideracionesActive ? "Consideraciones" : "Villancicos"}</span>
+            <button onClick={() => setIsSubMenuOpen(!isSubMenuOpen)} className="text-white text-2xl">
+              <Menu />
             </button>
-          ))}
-          <button
-            onClick={() => handleNavigation("Volver a la Novena")}
-            className="px-4 py-2 rounded-lg font-semibold bg-red-500 text-white hover:bg-red-700 transition-all"
+          </div>
+
+          <nav
+            className={`${
+              isSubMenuOpen ? "flex" : "hidden"
+            } md:flex flex-wrap justify-center gap-2 bg-blue-700 text-white p-4 shadow-lg w-full`}
           >
-            Volver a la Novena
-          </button>
-        </nav>
+            {(isConsideracionesActive ? consideracionesItems : villancicosItems).map((item) => (
+              <button
+                key={item.name}
+                onClick={() => handleNavigation(item.name, item.component)}
+                className="px-4 py-2 rounded-lg font-semibold transition-all border-2 border-white bg-white text-blue-700 hover:bg-blue-500 hover:text-white"
+              >
+                {item.name}
+              </button>
+            ))}
+            <button
+              onClick={() => handleNavigation("Volver a la Novena")}
+              className="px-4 py-2 rounded-lg font-semibold bg-red-500 text-white hover:bg-red-700 transition-all"
+            >
+              Volver a la Novena
+            </button>
+          </nav>
+        </>
       )}
 
-      <main className="flex-1 w-full h-screen overflow-auto bg-green-50 p-6">
+      <main className="flex-1 w-full h-screen overflow-auto">
         <div className="max-w-4xl mx-auto">{currentComponent}</div>
       </main>
     </div>

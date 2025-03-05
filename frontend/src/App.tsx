@@ -25,8 +25,8 @@ function App() {
               <Route path="/login" element={<AuthForm />} />
               <Route path="*" element={
                 <ProtectedRoute>
-                  <div className="h-screen bg-white">
-                    <div className="h-[90%] flex">
+                  <div className="h-screen flex flex-col">
+                    <div className="h-[92%]">
                       <Home />
                       <audio ref={audioRef} src={track.file} preload="auto"></audio>
                     </div>
