@@ -21,6 +21,7 @@ interface UseRatingResult {
   loading: boolean;
   error: string | null;
   fetchRating: (id_recipe: number) => void;
+  fetchUserRating: (id_recipe: number, id_user: number) => void;
   submitRating: (valor: number, id_calificador: number, id_receta: number) => void;
 }
 
@@ -38,6 +39,7 @@ const useRating = (): UseRatingResult => {
     try {
       const response = await api.get<Rating>(`${apiUrl}/${id_recipe}`);
       setRating(response.data); // Guardamos la calificación
+      console.log(response.data);
     } catch (err) {
       const error = err as AxiosError;
       setError(error.message);
@@ -45,7 +47,26 @@ const useRating = (): UseRatingResult => {
       setLoading(false);
     }
   };
+const fetchUserRating = async (id_recipe: number, id_user: number) => {
+  setError(null);
+  try {
+    const response = await api.get<Rating>('calificacion_receta_user', {
+      params: { id_recipe, id_user },
 
+    });
+      console.log(response.data);
+    return response.data.valor;    
+  } catch (err) {
+    const error = err as AxiosError;
+
+    if (error.response?.status === 404) {
+      console.log("User has not rated this recipe.");
+      return null; // Handle no rating case
+    }
+
+    setError(error.message);
+  }
+};
   // Enviar una nueva calificación para una receta
   const submitRating = async (valor: number, id_calificador: number, id_receta: number) => {
     setLoading(true);
@@ -71,6 +92,7 @@ const useRating = (): UseRatingResult => {
     error,
     fetchRating,
     submitRating,
+    fetchUserRating
   };
 };
 
