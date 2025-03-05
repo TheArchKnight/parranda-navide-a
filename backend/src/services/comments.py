@@ -20,7 +20,7 @@ class CommentsService:
             user = user_repository.get(db, comment.id_usuario)
             comment_response = CommentResponse(
                 id=comment.id,
-                username = user.name,
+                username=user.name,
                 text=comment.comentario,
                 image=comment.url_foto
             )

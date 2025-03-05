@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 from src.database import get_db
 from src.services.user import UserService
 from pydantic import EmailStr
-
+from src import auth
 user_service = UserService()
 router = APIRouter()
 
@@ -36,7 +36,8 @@ def login_user(request: schemas.LoginRequest, db: Session = Depends(get_db)):
 
 @router.put("/users/", response_model=schemas.UserResponse)
 def update_user(user_update: schemas.UserUpdate,
-                db: Session = Depends(get_db)):
+                db: Session = Depends(get_db),
+                token_verify: schemas.UserResponse = Depends(auth.get_current_user)):
     try:
         return user_service.update_user(user_update, db)
     except HTTPException as e:
@@ -47,8 +48,8 @@ def update_user(user_update: schemas.UserUpdate,
 
 @router.put("/users/profile_picture", response_model=schemas.UserResponse)
 async def update_profile_picture(
-    id: str = Form(...),
-    profile_picture: UploadFile = File(...),
+    id: str = Form(...), profile_picture: UploadFile = File(...),
+    token_verify: schemas.UserResponse = Depends(auth.get_current_user),
     db: Session = Depends(get_db)
 ):
     try:
@@ -71,6 +72,7 @@ async def update_profile_picture(
 
 @router.post("/users/password", response_model=dict)
 def update_password(password_update: schemas.PasswordUpdate,
+                    token_verify: schemas.UserResponse = Depends(auth.get_current_user),
                     db: Session = Depends(get_db)):
     try:
         return user_service.update_password(password_update, db)
@@ -80,14 +82,9 @@ def update_password(password_update: schemas.PasswordUpdate,
         raise HTTPException(status_code=400, detail=str(e))
 
 
-@router.post("/user/token", response_model=schemas.UserResponse)
-def verify_token(request: schemas.TokenResponse,
-                 db: Session = Depends(get_db)):
-    return {"state": 1}
-
-
 @router.post("/users/send_mail")
-async def send_mail(request: schemas.Mail, db: Session = Depends(get_db)):
+async def send_mail(request: schemas.Mail, db: Session = Depends(get_db),
+                    token_verify: schemas.UserResponse = Depends(auth.get_current_user)):
     try:
         user = crud.get_user_by_email(db, request.recipient, False)
         if user:

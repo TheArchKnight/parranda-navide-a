@@ -9,9 +9,6 @@ class FotoService:
 
     def create(self, foto: FotoCreate) -> FotoResponse:
         return self._foto_repository.add(foto)
-    
+
     def get_by_id(self, foto_id: int) -> FotoResponse:
         return self._foto_repository.get(foto_id)
-    
-
-    
