@@ -1,4 +1,4 @@
-from sqlalchemy import Column, ForeignKey, Integer, String
+from sqlalchemy import Column, ForeignKey, Integer, LargeBinary, String
 from src.database import Base
 
 
@@ -39,3 +39,14 @@ class Comentario(Base):
     id_usuario = Column(Integer, ForeignKey("user.id"), nullable=False)
     id_receta = Column(Integer, ForeignKey("receta.id"), nullable=False)
     respuesta_de = Column(Integer, ForeignKey("comentario.id"), nullable=True)
+    url_foto = Column(String, nullable=True)
+
+
+class Foto(Base):
+    __tablename__ = "foto"
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    url = Column(String, nullable=False)
+    id_receta = Column(Integer, ForeignKey("receta.id"), nullable=True)
+    id_usuario = Column(Integer, ForeignKey("user.id"), nullable=False)
+    id_comentario = Column(Integer, ForeignKey("comentario.id"), nullable=True)
+

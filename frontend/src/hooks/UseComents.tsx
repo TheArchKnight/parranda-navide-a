@@ -71,7 +71,7 @@ const useComments = (): UseCommentsResult => {
         comentario,
         id_usuario,
         id_receta,
-        image: imageUrl
+        url_foto: imageUrl
       } as CreateCommentPayload);
       if (response) fetchComments(id_receta); 
     } catch (err) {
