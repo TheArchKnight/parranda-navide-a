@@ -27,8 +27,8 @@ const Comments: React.FC<CommentsProps> = ({ recipeId }) => {
   const [editedText, setEditedText] = useState<string>("");
   const [, setEditedImage] = useState<string | undefined>(undefined);
 
-  const CLOUD_NAME = "dv4u0eoqq";
-  const UPLOAD_PRESET = "m6vk25j5";
+  const CLOUD_NAME = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
+  const UPLOAD_PRESET = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
   const { uploadImage, loading: uploadingImage } = useCloudinary(CLOUD_NAME, UPLOAD_PRESET);
 
   useEffect(() => {
