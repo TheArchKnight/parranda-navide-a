@@ -5,13 +5,17 @@ import { Button } from "../components/formComponents/Button";
 import PasswordStrengthChecker from "./formComponents/PasswordStrengthChecker";
 import ConfirmPasswordChecker from "../components/formComponents/ConfirmPasswordChecker";
 import PasswordInput from "../components/formComponents/PasswordInput";
-import UploadPhoto from "./formComponents/UploadPhoto";
 import defaultPhoto from "../assets/images/profile-picture.png";
 import api from "../services/api";
+import useCloudinary from "../hooks/UseCloudinary";
+import UploadButton from "../components/formComponents/UploadButton";
 
 const GestionPerfil: React.FC = () => {
   const { obtenerDatosUsuario, actualizarNombre, actualizarPassword, actualizarFoto, loading } = usePerfil();
   const user = obtenerDatosUsuario();
+  const CLOUD_NAME = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
+  const UPLOAD_PRESET = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
+  const { uploadImage, loading: uploadingImage } = useCloudinary(CLOUD_NAME, UPLOAD_PRESET);
 
   const [name, setName] = React.useState(user?.name || "");
   const [password, setPassword] = React.useState("");
@@ -23,7 +27,6 @@ const GestionPerfil: React.FC = () => {
   const [isEditingPassword, setIsEditingPassword] = React.useState(false);
   const [isSecurityCodeSent, setIsSecurityCodeSent] = React.useState(false);
   const [isSecurityCodeButtonDisabled, setIsSecurityCodeButtonDisabled] = React.useState(false);
-
   const [photoUrl, setPhotoUrl] = React.useState<string | null>(user?.photoUrl || null);
 
   const generateSecurityCode = () => Math.floor(100000 + Math.random() * 900000).toString();
@@ -66,10 +69,13 @@ const GestionPerfil: React.FC = () => {
     setIsSecurityCodeSent(false);
   };
 
-  const handlePhotoChange = async (file: File | null) => {
+  const handlePhotoSelect = async (file: File | null) => {
     if (file) {
-      //await actualizarFoto(file); 
-      setPhotoUrl(user?.photoUrl || null);
+      const uploadedUrl = await uploadImage(file);
+      if (uploadedUrl) {
+        setPhotoUrl(uploadedUrl);
+        await actualizarFoto(file);
+      }
     }
   };
 
@@ -102,7 +108,7 @@ const GestionPerfil: React.FC = () => {
                 className="w-full h-full object-cover"
               />
             </div>
-            <UploadPhoto onPhotoChange={handlePhotoChange} actualizarFoto={actualizarFoto} />
+            <UploadButton onFileSelect={handlePhotoSelect} loading={uploadingImage} />
           </div>
 
           {/* Datos del Usuario */}

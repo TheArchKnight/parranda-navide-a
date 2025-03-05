@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { usePerfil } from "../hooks/AsignarPerfil";
 import useComments from "../hooks/UseComents";
 import useCloudinary from "../hooks/UseCloudinary";
+import UploadButton from "../components/formComponents/UploadButton";
 
 interface Comment {
   id: number;
@@ -74,12 +75,9 @@ const Comments: React.FC<CommentsProps> = ({ recipeId }) => {
     setEditedImage(undefined);
   };
 
-  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      setImage(file);
-      setImagePreview(URL.createObjectURL(file));
-    }
+  const handleFileSelect = (file: File | null) => {
+    setImage(file);
+    setImagePreview(file ? URL.createObjectURL(file) : null);
   };
 
   return (
@@ -114,7 +112,7 @@ const Comments: React.FC<CommentsProps> = ({ recipeId }) => {
 
       <div className="mt-4 flex flex-col gap-2">
         <textarea className="p-2 border rounded w-full" placeholder="Escribe un comentario..." value={newComment} onChange={(e) => setNewComment(e.target.value)} />
-        <input type="file" accept="image/*" onChange={handleImageUpload} />
+        <UploadButton onFileSelect={handleFileSelect} loading={uploadingImage} />
         {imagePreview && <img src={imagePreview} alt="Preview" className="w-20 h-20 rounded" />}
         <button className="bg-red-500 text-white p-2 rounded" onClick={handleAddComment} >
           {uploadingImage ? "Subiendo imagen..." : "Enviar comentario"}
