@@ -12,8 +12,8 @@ const Player = () => {
     const { track, seekBg, seekBar, isPlaying, play, pause, time, cancionPrevia, cancionSiguiente, seekCancion, toggleShuffle, isShuffle } = context;
 
     return (
-        <div className="fixed bottom-0 left-0 w-full h-[10vh] min-h-[60px] max-h-[100px] bg-red-500 text-white p-2 flex flex-col items-center md:flex-row md:justify-center md:gap-6 overflow-hidden">
-            
+            <div className="fixed bottom-0 left-0 w-full h-[10vh] min-h-[10vh] bg-red-500 text-white p-2 flex flex-col items-center md:flex-row md:justify-center md:gap-6 overflow-hidden">
+
             {/* 📌 Sección: Imagen y Detalles de la Canción */}
             <div className="flex items-center gap-2 w-full md:w-auto min-w-0 flex-shrink-0">
                 <img className="w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 rounded-md object-cover" src={track.image} alt="Cover" />

@@ -11,7 +11,7 @@ const Home: React.FC = () => {
     const { user, logout } = useAuth();
     const navItems = [
         {
-            name: 'Pefil',
+            name: 'Perfil',
             component: <GestionPerfil/>
         },
         {

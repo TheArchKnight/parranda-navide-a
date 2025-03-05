@@ -5,10 +5,15 @@ const NavBar = () => {
     const navigate = useNavigate();
 
     const handleBack = () => {
+        // Si estamos en la página de inicio, no hacemos nada
+        if (location.pathname === "/") return;
+
+        // Si hay historial de navegación, retrocedemos
         if (window.history.state && window.history.state.idx > 0) {
             navigate(-1);
         }
     };
+    
 
     return (
         <>

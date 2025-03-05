@@ -31,7 +31,7 @@ function App() {
                       <audio ref={audioRef} src={track.file} preload="auto"></audio>
                     </div>
                     <Player />
-                </div>
+                  </div>
                 </ProtectedRoute>
               } />
             </Routes>
