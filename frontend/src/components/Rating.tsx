@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Star } from "lucide-react";
 import useRating from "../hooks/UseRating";
+import { useAuth } from "../contexts/AuthContext";
 
 interface RatingProps {
   recipeId: number;
@@ -8,15 +9,22 @@ interface RatingProps {
 
 const Rating: React.FC<RatingProps> = ({ recipeId }) => {
   // Usar el hook useRating
-  const { rating, loading, error, fetchRating, submitRating } = useRating();
+  const { user } = useAuth();
+  const { rating, loading, error, fetchRating, submitRating, fetchUserRating} = useRating();
 
   const [userRating, setUserRating] = useState<number>(0);
 
   // Obtener las calificaciones al montar el componente o cuando se haya enviado una nueva calificación
-  useEffect(() => {
-    fetchRating(Number(recipeId)); // Cargar las calificaciones de la receta usando el ID
-  }, []); 
+useEffect(() => {
+  fetchRating(Number(recipeId)); // Cargar las calificaciones de la receta usando el ID
 
+  const loadUserRating = async () => {
+    const rating = await fetchUserRating(Number(recipeId), Number(user?.id)); // Await the result
+    setUserRating(rating ?? 0); // Default to 0 if null
+  };
+
+  loadUserRating();
+}, [recipeId, user?.id]); // Added dependencies to prevent unnecessary re-renders
 
   const averageRating = rating ? rating.promedio : 0;
   const totalVotes = rating ? rating.votes : 0;
@@ -24,7 +32,8 @@ const Rating: React.FC<RatingProps> = ({ recipeId }) => {
   // Manejar la calificación del usuario
   const handleRating = (ratingValue: number) => {
     if (rating) {
-      submitRating(ratingValue, 1, Number(recipeId)); // Suponiendo que el id_calificador es 1 por ahora
+      submitRating(ratingValue, Number(user?.id), Number(recipeId)); // Suponiendo que el id_calificador es 1 por ahora
+      console.log(ratingValue)
       setUserRating(ratingValue);
     }
   };

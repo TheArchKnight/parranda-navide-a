@@ -36,3 +36,15 @@ def add_recipe_rating(calificacion_receta: AddCalificacion,
             db, calificacion_receta)
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
+
+
+@router.get("/calificacion_receta_user/")
+def get_user_recipe_rating(id_recipe: int, id_user: int, db: Session = Depends(get_db),
+                           token_verify: UserResponse = Depends(get_current_user)):
+    calificacion_recetas_service = CalificacionRecetasService()
+    try:
+        return calificacion_recetas_service.get_user_rating(db, id_recipe, id_user)
+    except HTTPException as e:
+        raise e
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
