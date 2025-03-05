@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes fall {
+    0% {
+      transform: translateY(-10vh); /* Empieza arriba */
+      opacity: 0.5; /* Mayor visibilidad */
+    }
+    100% {
+      transform: translateY(100vh);
+      opacity: 0.4; /* No desaparece del todo */
+    }
+  }
+  
+  .animate-fall {
+    animation: fall linear infinite;
+  }
+  
