@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, File, UploadFile, Form
-from src import schemas
+from src import schemas, crud
 from sqlalchemy.orm import Session
 from src.database import get_db
 from src.services.user import UserService
@@ -83,3 +83,18 @@ def update_password(password_update: schemas.PasswordUpdate,
 def verify_token(request: schemas.TokenResponse,
                  db: Session = Depends(get_db)):
     return {"state": 1}
+
+
+@router.post("/users/send_mail")
+async def send_mail(request: schemas.Mail, db: Session = Depends(get_db)):
+    try:
+        user = crud.get_user_by_email(db, request.recepient, False)
+        if user:
+            return await user_service.send_mail(request.recepient,
+                                                request.subject,
+                                                request.message)
+        raise HTTPException(status_code=409, detail="User already registered.")
+    except HTTPException as e:
+        raise e
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
