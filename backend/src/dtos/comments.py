@@ -10,6 +10,7 @@ class Comentario(BaseModel):
     id_usuario: int
     id_receta: int
     respuesta_de: Optional[int] = None  
+    url_foto: Optional[str] = None
 
     class Config:
         schema_extra = {

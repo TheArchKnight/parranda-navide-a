@@ -21,7 +21,8 @@ class CommentsService:
             comment_response = CommentResponse(
                 id=comment.id,
                 username = user.name,
-                text=comment.comentario
+                text=comment.comentario,
+                image=comment.url_foto
             )
             response.append(comment_response)
         return response
