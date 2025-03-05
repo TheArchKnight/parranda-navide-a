@@ -4,17 +4,13 @@ import DisplayAlbum from "./DisplayAlbum";
 
 const Display = () => {
     return (
-        <>
-            <div className="w-full h-full  p-3 pt-2 rounded bg-gray text-black lg:w-[100%] lg:ml-0"> 
+        <div className="w-full h-full p-3 pt-2 rounded bg-gray text-black flex-1"> 
             <Routes>
-                <Route path="*" element={<DisplayHome/>} />
-                <Route path="/album/:id_lista" element={
-                        <DisplayAlbum/>
-                    } />
-                </Routes>
-            </div>
-        </>
-        
-    )
-}
+                <Route path="*" element={<DisplayHome />} />
+                <Route path="/album/:id_lista" element={<DisplayAlbum />} />
+            </Routes>
+        </div>
+    );
+};
+
 export default Display;

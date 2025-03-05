@@ -16,7 +16,7 @@ const QuemaAnoViejo: React.FC = () => {
                 <img 
                     src={quemaGif} 
                     alt="Quema del Año Viejo" 
-                    className="w-64 md:w-72 lg:w-96 rounded-lg shadow-md transition-all transform hover:scale-105 border-4 border-red-500"
+                    className="w-60 h-60 md:w-72 md:h-72 lg:w-80 lg:h-80 rounded-lg shadow-md transition-all transform hover:scale-105 border-4 border-red-500 object-cover"
                 />
 
                 <p className="text-xl leading-relaxed mt-6 max-w-2xl text-center">

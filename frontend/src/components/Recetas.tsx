@@ -8,7 +8,7 @@ interface SubItem {
   component: JSX.Element;
 }
 
-const Rituales: React.FC = () => {
+const Recetas: React.FC = () => {
   const subItems: SubItem[] = [
     { name: "Natilla", component: <Natilla /> },
     { name: "Buñuelos", component: <Buñuelos /> },
@@ -25,27 +25,28 @@ const Rituales: React.FC = () => {
 
   return (
     <div className="flex flex-col w-full h-full overflow-y-auto">
-      <nav className="bg-red-600 text-white p-4 flex justify-center gap-4 shadow-lg w-full">
-      {subItems.map((item) => (
-        <button
-        key={item.name}
-        onClick={() => handleNavigation(item.name, item.component)}
-        className={`px-4 py-2 rounded-full font-semibold transition-all
-          ${selectedName === item.name 
-          ? "bg-orange-500 text-white shadow-md scale-105"
-          : "bg-white text-red-700 hover:bg-red-700 hover:text-white"
-          }`}
-        >
-        {item.name}
-        </button>
-      ))}
+      <nav className="bg-red-600 text-white p-4 flex flex-wrap justify-center gap-2 sm:gap-4 shadow-lg w-full">
+        {subItems.map((item) => (
+          <button
+            key={item.name}
+            onClick={() => handleNavigation(item.name, item.component)}
+            className={`px-3 py-2 text-sm sm:text-base rounded-full font-semibold transition-all
+              ${selectedName === item.name 
+                ? "bg-orange-500 text-white shadow-md scale-105"
+                : "bg-white text-red-700 hover:bg-red-700 hover:text-white"
+              }`}
+          >
+            {item.name}
+          </button>
+        ))}
       </nav>
 
-      <main className="flex flex-1 w-full h-full overflow-y-auto">
-      <div className="w-full h-full">{currentComponent}</div>
+      <main className="flex-1 w-full h-screen overflow-auto">
+        <div className="max-w-4xl mx-auto">{currentComponent}</div>
       </main>
     </div>
   );
 };
 
-export default Rituales;
+export default Recetas;
+

@@ -26,7 +26,7 @@ function App() {
               <Route path="*" element={
                 <ProtectedRoute>
                   <div className="h-screen flex flex-col">
-                    <div className="h-[92%]">
+                    <div className="h-[90%]">
                       <Home />
                       <audio ref={audioRef} src={track.file} preload="auto"></audio>
                     </div>

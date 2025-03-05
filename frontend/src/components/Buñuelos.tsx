@@ -5,20 +5,20 @@ import Comments from './Comments';
 
 const Buñuelos: React.FC = () => {
     return (
-        <div className="flex flex-1 items-center justify-center w-full h-full bg-white text-red-700">
-            <div className="w-full h-full flex flex-col items-center justify-start">
+        <div className="flex flex-col lg:flex-row items-center justify-center w-full h-full text-red-700 gap-8 p-6">
+            <div className="w-full h-full flex flex-col items-center justify-start p-8">
                 
-                <h1 className="text-5xl font-extrabold drop-shadow-md flex items-center gap-2">
+                <h1 className="text-5xl font-extrabold drop-shadow-md flex flex-col items-center text-center gap-2">
                     🍩 Buñuelos Colombianos 🍩
                 </h1>
-                <p className="text-lg text-gray-600 italic mt-2">
+                <p className="text-lg text-gray-600 italic mt-2 text-center">
                     El infaltable acompañante de la Navidad colombiana
                 </p>
 
                 <img 
                     src={recetaGif}  
                     alt="Buñuelos colombianos" 
-                    className="w-64 h-64 rounded-lg shadow-md transition-all transform hover:scale-105 mt-6 border-4 border-red-500"
+                    className="w-64 md:w-72 lg:w-96 rounded-lg shadow-md transition-all transform hover:scale-105 border-4 border-red-500 mt-4"
                 />
 
                 <p className="text-xl leading-relaxed mt-6 max-w-2xl text-center">
@@ -26,8 +26,8 @@ const Buñuelos: React.FC = () => {
                     almidón de yuca y queso costeño. Son una parte esencial de la Navidad y se disfrutan junto con la natilla.
                 </p>
 
-                <h2 className="text-2xl font-bold mt-6">📝 Ingredientes:</h2>
-                <ul className="list-disc list-inside text-lg text-gray-700">
+                <h2 className="text-2xl font-bold mt-10">📝 Ingredientes:</h2>
+                <ul className="list-disc list-outside text-lg text-gray-700 mt-4 pl-6">
                     <li>1 taza de almidón de yuca</li>
                     <li>1 taza de queso costeño rallado</li>
                     <li>1 huevo</li>
@@ -37,26 +37,23 @@ const Buñuelos: React.FC = () => {
                     <li>Aceite para freír</li>
                 </ul>
 
-                <h2 className="text-2xl font-bold mt-6">👨‍🍳 Preparación:</h2>
-                <ol className="list-decimal list-inside text-lg text-gray-700">
+                <h2 className="text-2xl font-bold mt-10">👨‍🍳 Preparación:</h2>
+                <ol className="list-decimal list-outside text-lg text-gray-700 mt-4 pl-6">
                     <li>Mezclar el almidón, el queso, el huevo, el azúcar y el polvo de hornear.</li>
                     <li>Agregar leche poco a poco hasta obtener una masa suave.</li>
                     <li>Formar bolitas y freír en aceite caliente hasta que estén doradas.</li>
                     <li>Escurrir en papel absorbente y servir calientes.</li>
                 </ol>
 
-                <div className="w-full mt-10">
+                <div className="w-full mt-10 flex flex-col items-center">
                     <h2 className="text-2xl font-bold text-center mb-3">⭐ Califica esta receta</h2>
-                    <div className="flex justify-center">
-                        <Rating recipeId={2} />
-                    </div>
+                    <Rating recipeId={2} />
                 </div>
 
                 <div className="w-full max-w-2xl mx-auto mt-10 bg-white p-5 rounded-lg shadow-md">
-                    <h2 className="text-2xl font-boldtext-center mb-3">💬 Comentarios</h2>
+                    <h2 className="text-2xl font-bold text-center mb-3">💬 Comentarios</h2>
                     <Comments recipeId={2} />
                 </div>
-
             </div>
         </div>
     );
