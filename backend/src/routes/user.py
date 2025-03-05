@@ -3,6 +3,7 @@ from src import schemas, crud
 from sqlalchemy.orm import Session
 from src.database import get_db
 from src.services.user import UserService
+from pydantic import EmailStr
 
 user_service = UserService()
 router = APIRouter()
@@ -94,6 +95,18 @@ async def send_mail(request: schemas.Mail, db: Session = Depends(get_db)):
                                                 request.subject,
                                                 request.message)
         raise HTTPException(status_code=409, detail="User already registered.")
+    except HTTPException as e:
+        raise e
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+
+@router.post("/users/forgotPassword")
+async def send_password(email: EmailStr,
+                        db: Session = Depends(get_db)):
+    try:
+        result = await user_service.forgot_password(email, db)
+        return result
     except HTTPException as e:
         raise e
     except Exception as e:

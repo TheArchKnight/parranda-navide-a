@@ -10,17 +10,20 @@ type LoginFormProps = {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onSubmit: (e: React.FormEvent) => void;
   loading: boolean;
+  onForgotPassword: () => void;
 };
 
-const  LoginForm = ({
+const LoginForm = ({
   formData,
   onChange,
   onSubmit,
   loading,
-}: LoginFormProps)  => {
+  onForgotPassword,
+}: LoginFormProps) => {
   const [showPassword, setShowPassword] = React.useState(false);
+
   return (
-    <div className="inset-0 w-full ">
+    <div className="inset-0 w-full">
       <h2 className="text-2xl font-bold mb-6 text-center">Iniciar sesión</h2>
       <form onSubmit={onSubmit} className="space-y-4">
         <Input
@@ -46,12 +49,17 @@ const  LoginForm = ({
         </Button>
       </form>
       <p className="mt-4 text-sm text-center">
-        <button type="button" className="text-red-500 hover:underline">
+        <button
+          type="button"
+          className="text-red-500 hover:underline"
+          onClick={onForgotPassword}
+        >
           ¿Olvidaste tu contraseña?
         </button>
       </p>
     </div>
   );
-}
+};
 
 export default LoginForm;
+

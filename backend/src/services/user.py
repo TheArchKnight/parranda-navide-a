@@ -9,7 +9,8 @@ from pydantic import EmailStr
 from dotenv import load_dotenv
 import os
 import shutil
-
+import secrets
+import string
 
 load_dotenv()
 
@@ -100,3 +101,18 @@ class UserService():
             return {"message": "Mail sent successfully."}
         except Exception as e:
             return {"error": f"Failed to send email: {str(e)}"}
+
+    async def forgot_password(self, email: EmailStr, db: Session):
+        user = crud.get_user_by_email(db, email, False)
+        if not user:
+            raise HTTPException(status_code=404, detail="User not found")
+        password = ''.join(secrets.choice(string.digits) for _ in range(12))
+        # Guardar la nueva contraseña en la base de datos (hasheada)
+        user.password = hash_password(password)
+        db.commit()
+        db.refresh(user)
+
+        # Enviar email con la nueva contraseña
+        message = f"La nueva contraseña es: {password}"
+        await self.send_mail(user.email, "Recuperación de contraseña", message)
+        return {"message": "Se ha enviado un correo con la nueva contraseña."}

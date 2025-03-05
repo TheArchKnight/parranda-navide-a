@@ -1,35 +1,48 @@
 import useAuthForm from "../hooks/UseAuthForm";
 import { Button } from "./formComponents/Button";
-
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
+import ForgotPasswordForm from "./ForgotPasswordForm";
+import { useState } from "react";
 
-const  AuthForm = () => {
+const AuthForm = () => {
   const { isLogin, setIsLogin, loading, formData, handleChange, handleSubmit } =
     useAuthForm();
+  const [isForgotPassword, setIsForgotPassword] = useState(false);
 
   return (
     <div className="fixed inset-0 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
       <div className="relative w-full max-w-[800px] h-[500px] bg-white rounded-2xl overflow-hidden shadow-2xl">
         <div className="absolute inset-0 flex">
           <div className="relative w-full flex">
-            <div className="w-1/2 p-8">
-              <LoginForm
-                formData={formData}
-                onChange={handleChange}
-                onSubmit={handleSubmit}
-                loading={loading}
-              />
-            </div>
+            {!isForgotPassword ? (
+              <>
+                <div className="w-1/2 p-8">
+                  <LoginForm
+                    formData={formData}
+                    onChange={handleChange}
+                    onSubmit={handleSubmit}
+                    loading={loading}
+                    onForgotPassword={() => setIsForgotPassword(true)}
+                  />
+                </div>
 
-            <div className="w-1/2 p-8">
-              <RegisterForm
-                formData={formData}
-                onChange={handleChange}
-                onSubmit={handleSubmit}
-                loading={loading}
-              />
-            </div>
+                <div className="w-1/2 p-8">
+                  <RegisterForm
+                    formData={formData}
+                    onChange={handleChange}
+                    onSubmit={handleSubmit}
+                    loading={loading}
+                  />
+                </div>
+              </>
+            ) : (
+              <div className="w-1/2 p-8">
+                <ForgotPasswordForm
+                  onCancel={() => setIsForgotPassword(false)}
+                />
+              </div>
+            )}
           </div>
 
           <div
@@ -55,7 +68,7 @@ const  AuthForm = () => {
       </div>
     </div>
   );
-}
-
+};
 
 export default AuthForm;
+
