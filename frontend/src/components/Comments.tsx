@@ -36,7 +36,7 @@ const Comments: React.FC<CommentsProps> = ({ recipeId }) => {
   }, [recipeId]);
 
   const handleAddComment = async () => {
-    if (!newComment.trim() && !image) return;
+    if (!newComment.trim()) return;
 
 
     if (image) {
@@ -49,6 +49,10 @@ const Comments: React.FC<CommentsProps> = ({ recipeId }) => {
         console.error("Error al subir imagen:", err);
       });
       
+    }
+    else {
+      createComment(newComment, Number(user?.id) || 0, recipeId);
+      setNewComment("");
     }
   };
 
@@ -112,7 +116,7 @@ const Comments: React.FC<CommentsProps> = ({ recipeId }) => {
         <textarea className="p-2 border rounded w-full" placeholder="Escribe un comentario..." value={newComment} onChange={(e) => setNewComment(e.target.value)} />
         <input type="file" accept="image/*" onChange={handleImageUpload} />
         {imagePreview && <img src={imagePreview} alt="Preview" className="w-20 h-20 rounded" />}
-        <button className="bg-red-500 text-white p-2 rounded" onClick={handleAddComment} disabled={uploadingImage}>
+        <button className="bg-red-500 text-white p-2 rounded" onClick={handleAddComment} >
           {uploadingImage ? "Subiendo imagen..." : "Enviar comentario"}
         </button>
       </div>
